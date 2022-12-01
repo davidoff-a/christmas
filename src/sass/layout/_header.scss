@@ -1,0 +1,42 @@
+.header {
+  height: 50px;
+  padding: 5px 0;
+  background-color: $main-bgColor;
+  flex: 0 0 50px;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__info {
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.toy-counter {
+  // margin-left: 24px;
+  width: 48px;
+  height: 40px;
+  background-image: url("../assets/svg/ball-2.svg");
+  background-size: 48px 40px;
+  background-position: left -3px;
+  background-repeat: no-repeat;
+  transition: 0.3s;
+  &__number {
+    display: inline-block;
+    min-width: 26px;
+    height: 26px;
+    margin-top: 9px;
+    margin-left: 11px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    color: #ffffff;
+    font-family: "Steppe";
+    background-color: #278d9f;
+  }
+}

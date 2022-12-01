@@ -1,0 +1,28 @@
+/* neucha-regular - latin_cyrillic */
+@font-face {
+  font-family: "Neucha";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/neucha-v12-latin_cyrillic-regular.eot"); /* IE9 Compat Modes */
+  src: local(""), url("../assets/fonts/neucha-v12-latin_cyrillic-regular.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("../assets/fonts/neucha-v12-latin_cyrillic-regular.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("../assets/fonts/neucha-v12-latin_cyrillic-regular.woff") format("woff"),
+    /* Modern Browsers */ url("../assets/fonts/neucha-v12-latin_cyrillic-regular.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("../assets/fonts/neucha-v12-latin_cyrillic-regular.svg#Neucha") format("svg"); /* Legacy iOS */
+}
+
+/* Webfont: Steppe-Regular */
+@font-face {
+  font-family: "Steppe";
+  src: url("../assets/fonts/Steppe.eot");
+  /* IE9 Compat Modes */
+  src: url("../assets/fonts/Steppe.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("../assets/fonts/Steppe.woff") format("woff"),
+    /* Modern Browsers */ url("../assets/fonts/Steppe.ttf") format("truetype"), 
+    url("../assets/fonts/Steppe.woff2") format("woff2"),
+    /* Modern Browsers */ url("../assets/fonts/Steppe.otf") format("opentype"); /* Safari, Android, iOS */
+  font-style: normal; /* Safari, Android, iOS */
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}

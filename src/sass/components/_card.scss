@@ -1,0 +1,49 @@
+.card-of-toy {
+  height: 265px;
+  width: 160px;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  color: $main-tColor;
+  font-family: $ff-Text;
+  font-size: 14px;
+  line-height: 16px;
+  background: radial-gradient(109.56% 109.56% at 0% -2.94%, rgba(255, 255, 255, 0.5) 0%, rgba(179, 246, 255, 0.5) 100%);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+
+  &__title {
+    font-family: $ff-Header;
+    font-size: 24px;
+    line-height: 28px;
+  }
+  &__propList {
+    margin-bottom: 0;
+    & > li {
+      margin-top: 6px;
+    }
+  }
+
+  &__img {
+    display: block;
+    margin: 0 auto;
+    height: 60px;
+    width: auto;
+  }
+}
+
+.favorite {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 35px;
+  top: 65px;
+  opacity: 0;
+  transform: rotateX(20deg);
+  filter: brightness(0) saturate(100%) invert(58%) sepia(36%) saturate(764%) hue-rotate(6deg) brightness(118%)
+    contrast(92%);
+  &.starred {
+    opacity: 1;
+  }
+}

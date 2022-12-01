@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <title>MerryCristmas</title>
+</head>
+
+<body>
+  <div class="wrapper wrapper_column">
+    <header class="header">
+      <div class="container">
+        <div class="wrapper">
+          <nav class="nav__menu">
+            <ul class="nav__list">
+              <li class="nav__item">
+                <a href="./index.html" class="nav__link">
+                  <img class="nav__img" src="./assets/svg/tree.svg" alt="Домашняя страница" />
+                </a>
+              </li>
+              <li class="nav__item">
+                <a href="./toys.html" class="nav__link">Игрушки</a>
+              </li>
+              <li class="nav__item">
+                <a href="./trees.html" class="nav__link">Наряди ёлку</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="header__info">
+            <div>
+              <input type="search" class="search" id="searchField" placeholder="Поиск" />
+            </div>
+            <div class="toy-counter">
+              <span class="toy-counter__number"> 0 </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="container">
+        <div class="wrapper">
+          <aside class="controls">
+            <article class="block">
+              <h3 class="block__title">Фильтры</h3>
+              <section class="filter">
+                <h4 class="filter__title">Форма: </h4>
+                <ul class="filter__list shapes">
+                  <li class="filter__item" data-shape="шар">
+                    <img src="./assets/svg/ball.svg" alt="ball" title="Украшения в форме шара" />
+                  </li>
+                  <li class="filter__item" data-shape="колокол">
+                    <img src="./assets/svg/bell.svg" alt="bell" title="Украшения в форме колокольчика" />
+                  </li>
+                  <li class="filter__item" data-shape="шишка">
+                    <img src="./assets/svg/cone.svg" alt="cone" title="Украшения в форме шишки" />
+                  </li>
+                  <li class="filter__item" data-shape="снежинка">
+                    <img src="./assets/svg/snowflake.svg" alt="snow" title="Украшения в форме снежинки" />
+                  </li>
+                  <li class="filter__item" data-shape="фигурка">
+                    <img src="./assets/svg/toy.svg" alt="toy" title="Украшения в форме игрушки" />
+                  </li>
+                </ul>
+              </section>
+              <section class="filter">
+                <h4 class="filter__title">Цвет: </h4>
+                <ul class="filter__list colors">
+                  <li class="filter__item" data-color="белый">
+                    <div class="filter__color white">
+
+                    </div>
+                  </li>
+                  <li class="filter__item" data-color="желтый">
+                    <div class="filter__color yellow">
+
+                    </div>
+                  </li>
+                  <li class="filter__item" data-color="красный">
+                    <div class="filter__color red">
+
+                    </div>
+                  </li>
+                  <li class="filter__item" data-color="синий">
+                    <div class="filter__color blue">
+
+                    </div>
+                  </li>
+                  <li class="filter__item" data-color="зелёный">
+                    <div class="filter__color green">
+                    </div>
+                  </li>
+                </ul>
+              </section>
+              <section class="filter">
+                <h4 class="filter__title">Размер: </h4>
+                <ul class="filter__list sizes">
+                  <li class="filter__item large" data-size="большой">
+                    <img src="./assets/svg/ball.svg" alt="ball" title="Большие укражения" />
+                  </li>
+                  <li class="filter__item middle" data-size="средний">
+                    <img src="./assets/svg/ball.svg" alt="ball" title="Украшения среднего размера" />
+                  </li>
+                  <li class="filter__item small" data-size="малый">
+                    <img src="./assets/svg/ball.svg" alt="ball" title="Маленькие украшения" />
+                  </li>
+                </ul>
+              </section>
+              <section class="filter">
+                <h4 class="filter__title">Любимые: </h4>
+                <ul class="filter__list favorite__only">
+                  <li class="filter__item">
+                    <input type="checkbox" id="favorite-only" name="favorite-only">
+                  </li>
+                </ul>
+              </section>
+            </article>
+            <article class="block">
+              <h3 class="block__title">Сортировка</h3>
+              <section class="filter column">
+                <select class="sorting" id="sortField">
+                  <option value="name">По названию</option>
+                  <option value="year">По году</option>
+                </select>
+                <select class="sorting" id="sortDirection">
+                  <option value="asc">По возрастанию</option>
+                  <option value="desc">По убыванию</option>
+                </select>
+              </section>
+            </article>
+            <article class="block">
+              <h3 class="block__title">Фильтры по диапазону</h3>
+              <section class="filter column column_160">
+                <div class="slider slider-round" id="slider__quantity"></div>
+                <div class="filter__wrapper">
+                  <input type="text" id="slider__quantity_left" value="1"></input>
+
+                  <input type="text" id="slider__quantity_right" value="12"></input>
+                </div>
+
+                <div class="slider slider-round" id="slider__year"></div>
+                <div class="filter__wrapper">
+                  <input type="text" id="slider__year_left" value="1940"></input>
+
+                  <input type="text" id="slider__year_right" value="2021"></input>
+                </div>
+
+              </section>
+            </article>
+            <article class="block">
+              <h3 class="block__title">Сброс всех фильтров</h3>
+              <section class="filter">
+                <div class="reset">Сбросить</div>
+              </section>
+            </article>
+
+          </aside>
+          <main class="cards">
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+            <div class="card-of-toy"><h4 class="card-of-toy__title">Большой шар с рисунком</h4><img src="./assets/star.svg" class="favorite"><img src="./assets/1.png" alt="toy #1" class="card-of-toy__img"><ul class="card-of-toy__propList"><li>Количество: 2</li><li>Год покупки: 1960</li><li>Форма: шар</li><li>Цвет: желтый</li><li>Размер: большой</li><li>Любимая: нет</li></ul></div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__wrapper">
+          <a href="https://github.com/davidoff-a/" class="footer__link">
+            <div class="author">Davidoff-A</div>
+          </a>
+          <div class="rs-logo">
+            <a href="https://rs.school/" class="footer__link"><img src="./assets/svg/rss.svg" alt="rsschool logo"
+                class="rss-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>

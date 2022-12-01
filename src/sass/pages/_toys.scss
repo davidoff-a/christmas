@@ -1,0 +1,32 @@
+.controls {
+  width: 20%;
+  flex: 0 0 25%;
+
+  &__block {
+    width: 100%;
+  }
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  // align-items: stretch;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  gap: 20px;
+  &__wrapper {
+    // height: 100%;
+    width: 70%;
+    flex: 1 1 70%;
+    margin-left: 20px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+  }
+}

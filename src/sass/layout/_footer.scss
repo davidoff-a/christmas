@@ -1,0 +1,28 @@
+.footer {
+  height: 50px;
+  background-color: $main-bgColor;
+  padding: 10px 0;
+  margin-bottom: 0;
+  flex: 0 0 50px;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__link {
+    color: $main-tColor;
+  }
+}
+
+.author {
+  font-family: $ff-Text;
+}
+.rss-logo {
+  height: 30px;
+  width: auto;
+  & img {
+    height: 100%;
+    width: auto;
+  }
+}

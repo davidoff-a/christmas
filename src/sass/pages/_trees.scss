@@ -1,0 +1,173 @@
+.side {
+  width: 26%;
+  flex: 0 0 26%;
+}
+
+.center {
+  width: 48%;
+  height: 80%;
+  flex: 1 1 auto;
+  margin: 0 10px;
+  text-align: center;
+  border-radius: 10px;
+  // background: url("./assets/1.jpg") center center/cover no-repeat;
+}
+
+.control {
+  width: 40px;
+  height: 40px;
+  margin-right: 40px;
+  display: block;
+}
+
+.thumb {
+  margin: 5px 5px 0 0;
+  border-radius: 10px;
+  background-color: $sec-bgColor;
+
+  &__bg {
+    width: 65px;
+    height: 65px;
+  }
+  &__tree {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+// #thumb-bg1 {
+//   background: url("./assets/1.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg2 {
+//   background: url("./assets/2.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg3 {
+//   background: url("./assets/3.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg4 {
+//   background: url("./assets/4.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg5 {
+//   background: url("./assets/5.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg6 {
+//   background: url("./assets/6.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg7 {
+//   background: url("./assets/7.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg8 {
+//   background: url("./assets/8.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg9 {
+//   background: url("./assets/9.jpg") center center/cover no-repeat;
+// }
+// #thumb-bg10 {
+//   background: url("./assets/10.jpg") center center/cover no-repeat;
+// }
+
+// #thumb-tree1 {
+//   background: url("./assets/1.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-tree2 {
+//   background: url("./assets/2.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-tree3 {
+//   background: url("./assets/3.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-tree4 {
+//   background: url("./assets/4.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-tree5 {
+//   background: url("./assets/5.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-tree6 {
+//   background: url("./assets/6.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+
+// #thumb-toy1 {
+//   background: url("./assets/1.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy2 {
+//   background: url("./assets/2.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy3 {
+//   background: url("./assets/3.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy4 {
+//   background: url("./assets/4.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy5 {
+//   background: url("./assets/5.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy6 {
+//   background: url("./assets/6.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy7 {
+//   background: url("./assets/7.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy8 {
+//   background: url("./assets/8.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy9 {
+//   background: url("./assets/9.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy10 {
+//   background: url("./assets/10.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy11 {
+//   background: url("./assets/11.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy12 {
+//   background: url("./assets/12.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy13 {
+//   background: url("./assets/13.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy14 {
+//   background: url("./assets/14.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+// #thumb-toy15 {
+//   background: url("./assets/15.png") center center/contain no-repeat;
+//   background-color: $sec-bgColor;
+// }
+
+.counter-toys {
+  width: 20px;
+  height: 20px;
+  margin: 3px 0 0 3px;
+  padding: 4px;
+  text-align: center;
+  color: $main-tColor;
+  font-size: 12px;
+  font-family: $ff-Text;
+  border-radius: 100%;
+  background-color: $main-borderColor;
+}
+
+.christmas-tree {
+  margin: 20px auto;
+  width: 350px;
+  height: 550px;
+  display: block;
+}

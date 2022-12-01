@@ -1,0 +1,16 @@
+
+.block {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  background-color: rgba(31, 112, 127, 0.3);
+  &__title {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-family: $ff-Header;
+    color: $main-tColor;
+  }
+}

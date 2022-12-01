@@ -1,0 +1,22 @@
+@import 'abstracts/variables';
+@import 'abstracts/placeholders';
+
+@import 'base/reset';
+@import 'base/typography';
+
+@import 'layout/layout';
+@import 'layout/header';
+@import 'layout/footer';
+
+@import 'components/navigation';
+@import 'components/search';
+@import 'components/filters';
+@import 'components/block';
+@import 'components/card';
+
+@import 'pages/home';
+@import 'pages/toys';
+@import 'pages/trees';
+
+
+

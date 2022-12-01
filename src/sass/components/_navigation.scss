@@ -1,0 +1,31 @@
+.nav {
+  &__menu {
+    width: 450px;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item {
+    font-family: $ff-Header;
+    font-size: 24px;
+    height: 40px;
+    border-bottom: 3px solid $main-bgColor;
+    &.active{
+      border-bottom: 3px solid $main-borderColor;
+    }
+  }
+
+  &__link {
+    color: $main-tColor;
+    line-height: 40px;
+  }
+
+  &__img {
+    height: 40px;
+    width: auto;
+  }
+}
