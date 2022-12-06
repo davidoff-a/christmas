@@ -1,11 +1,5 @@
-import "./sass/index.scss";
+import './sass/index.scss';
 
+import { appModule } from './app/appModule';
 
-import { appModule } from "./app/appModule";
-
-  appModule.start();
-
-
-
-
-
+appModule.start();

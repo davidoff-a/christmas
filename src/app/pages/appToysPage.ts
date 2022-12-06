@@ -1,35 +1,56 @@
-import { AppComponent } from "../appComponent";
-import data from "../../data"
-import { Card } from "../components/cards";
+import * as events from 'events';
+import { AppComponent } from '../appComponent';
+import data from '../../data';
+import { Card } from '../components/cards';
+
+interface DataToy {
+  num: string;
+  name: string;
+  count: string;
+  year: string;
+  shape: string;
+  color: string;
+  size: string;
+  favorite: boolean
+}
 
 class AppToysPage extends AppComponent {
-  constructor(config: { selector: string; template: string }) {
+  toysData:DataToy[];
+
+  constructor(config: { selector: string; template: string }, toysData:DataToy[] = data) {
     super(config);
+    this.toysData = toysData;
   }
 
   render(): void {
     this.el = document.querySelector(this.selector) as HTMLElement;
     if (!this.el) {
-      throw new Error(
-        `Component with selector ${this.selector} wasn't found!!!`
-      );
+      throw new Error(`Component with selector ${this.selector} wasn't found!!!`);
     } else {
       this.el.innerHTML = this.template;
     }
-    
-    const $cardsContainer: HTMLElement = document.querySelector(".cards")as HTMLElement;
+
+    const $cardsContainer: HTMLElement = document.querySelector('.cards') as HTMLElement;
     if ($cardsContainer instanceof HTMLElement) {
-      data.forEach((toy) => {
+      this.toysData.forEach((toy) => {
         const card = new Card(toy);
-        card.render(card.createCard(), ".cards")
+        card.render(card.createCard(), '.cards');
       });
     }
-    
+    const listOfFilters = document.querySelectorAll('.filter__list');
+    Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+
+      if (target.closest('li') && target.closest('.filter__item')) {
+        const tClosest = target.closest('.filter__item') as HTMLElement;
+        tClosest ? tClosest.classList.toggle('active') : '';
+      }
+    }));
   }
 }
 
 export const appToysPage = new AppToysPage({
-  selector: ".content",
+  selector: '.content',
   template: `
         <div class="container">
         <div class="wrapper">

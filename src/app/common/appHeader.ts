@@ -1,21 +1,17 @@
-import { AppComponent } from "../appComponent";
+import { AppComponent } from '../appComponent';
 
 class AppHeader extends AppComponent {
-  constructor(config: {
-    selector: string;
-    template: string;
-    events?: { [keys: string]: string };
-  }) {
+  constructor(config: { selector: string; template: string; events?: { [keys: string]: string } }) {
     super(config);
   }
 
-  onMenuItemClick(event: Event) {
-    console.log(event);
-  }
+  // onMenuItemClick(event: Event) {
+  //   console.log(event);
+  // }
 }
 
 export const appHeader = new AppHeader({
-  selector: ".header",
+  selector: '.header',
   template: `
         <div class="container">
           <div class="wrapper">
@@ -54,5 +50,5 @@ export const appHeader = new AppHeader({
           </div>
         </div>
   `,
-  events: { "click .nav__list": "onNavMenuItemClick" },
+  events: { 'click .nav__list': 'onNavMenuItemClick' },
 });

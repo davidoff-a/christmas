@@ -1,13 +1,13 @@
-import { Component } from "../core/component";
+import { Component } from '../core/component';
 
-class AppFooter extends Component{
-  constructor(config: { selector: string, template: string }) {
+class AppFooter extends Component {
+  constructor(config: { selector: string; template: string }) {
     super(config);
   }
 }
 
 export const appFooter = new AppFooter({
-  selector: ".footer",
+  selector: '.footer',
   template: `
     <div class="container">
       <div class="footer__wrapper">
@@ -15,7 +15,7 @@ export const appFooter = new AppFooter({
         <div class="rs-logo">
         <a href="https://rs.school/" class="footer__link"><img src="./assets/rss.svg" alt="rsschool logo"
             class="rss-logo" /></a>
-        </div>      
+        </div>
         </div>
     </div>
     `,

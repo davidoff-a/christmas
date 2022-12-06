@@ -1,13 +1,13 @@
-import { Component } from "../core/component";
+import { Component } from '../core/component';
 
-class AppFooter extends Component{
-  constructor(config: { selector: string, template: string }) {
+class AppFooter extends Component {
+  constructor(config: { selector: string; template: string }) {
     super(config);
   }
 }
 
 export const appFooter = new AppFooter({
-  selector: ".footer",
+  selector: '.footer',
   template: `
     <div class="card-of-toy">
       <h4 class="card-of-toy__title">Большой шар с рисунком</h4>
@@ -24,4 +24,3 @@ export const appFooter = new AppFooter({
     </div>
     `,
 });
-
