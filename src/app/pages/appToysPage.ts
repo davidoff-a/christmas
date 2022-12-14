@@ -2,8 +2,9 @@ import * as events from 'events';
 import { AppComponent } from '../appComponent';
 import data from '../../data';
 import { Card } from '../components/cards';
+import Data from '../../data';
 
-interface DataToy {
+export interface DataToy {
   num: string;
   name: string;
   count: string;
@@ -11,15 +12,34 @@ interface DataToy {
   shape: string;
   color: string;
   size: string;
-  favorite: boolean
+  favorite: boolean;
 }
 
 class AppToysPage extends AppComponent {
-  toysData:DataToy[];
+  toysData: DataToy[];
 
-  constructor(config: { selector: string; template: string }, toysData:DataToy[] = data) {
+  constructor(config: { selector: string; template: string }, toysData: DataToy[] = data) {
     super(config);
     this.toysData = toysData;
+  }
+
+  renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
+    const $cardsContainer: HTMLElement = document.querySelector(selector) as HTMLElement;
+    if ($cardsContainer instanceof HTMLElement) {
+      $cardsContainer.innerHTML = '';
+      toys.forEach((toy) => {
+        const card = new Card(toy);
+        card.render(card.createCard(), selector);
+      });
+    }
+  }
+
+  filterCards(filterParameters: { [key: string]: string[] }, toys: DataToy[] = this.toysData): DataToy[] {
+    const arrFilters = Object.entries(filterParameters);
+    return arrFilters.reduce((accToysByCat, curCats) => {
+      const [cat, arrValues] = curCats;
+      return arrValues.reduce((accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)], [] as DataToy[]);
+    }, toys as DataToy[]);
   }
 
   render(): void {
@@ -30,20 +50,29 @@ class AppToysPage extends AppComponent {
       this.el.innerHTML = this.template;
     }
 
-    const $cardsContainer: HTMLElement = document.querySelector('.cards') as HTMLElement;
-    if ($cardsContainer instanceof HTMLElement) {
-      this.toysData.forEach((toy) => {
-        const card = new Card(toy);
-        card.render(card.createCard(), '.cards');
-      });
-    }
     const listOfFilters = document.querySelectorAll('.filter__list');
+    let arrToys = [] as DOMStringMap[];
+    const Filters = {} as { [key: string]: string[] };
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-
-      if (target.closest('li') && target.closest('.filter__item')) {
-        const tClosest = target.closest('.filter__item') as HTMLElement;
-        tClosest ? tClosest.classList.toggle('active') : '';
+      const tClosestFItem = target.closest('.filter__item') as HTMLElement;
+      if (tClosestFItem) {
+        const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
+        if (tClosestFItem.classList.contains('active')) {
+          tClosestFItem.classList.remove('active');
+          arrToys = arrToys.filter((i) => i[attributeKey] !== arrParam);
+          Filters[attributeKey] = Filters[attributeKey].filter((attr) => attr !== arrParam);
+          console.log('Filters=>', Filters);
+          this.renderCards(this.filterCards(Filters, this.toysData));
+        } else {
+          tClosestFItem.classList.add('active');
+          arrToys.push(tClosestFItem.dataset);
+          Array.isArray(Filters[attributeKey])
+            ? Filters[attributeKey].push(arrParam as string)
+            : (Filters[attributeKey] = [arrParam as string]);
+          this.renderCards(this.filterCards(Filters, this.toysData));
+          console.log('Filters=>', Filters);
+        }
       }
     }));
   }
