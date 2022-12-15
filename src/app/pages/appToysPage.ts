@@ -1,8 +1,6 @@
-import * as events from 'events';
 import { AppComponent } from '../appComponent';
 import data from '../../data';
 import { Card } from '../components/cards';
-import Data from '../../data';
 
 export interface DataToy {
   num: string;
@@ -12,7 +10,7 @@ export interface DataToy {
   shape: string;
   color: string;
   size: string;
-  favorite: boolean;
+  favorite: string;
 }
 
 class AppToysPage extends AppComponent {
@@ -51,7 +49,7 @@ class AppToysPage extends AppComponent {
     }
 
     const listOfFilters = document.querySelectorAll('.filter__list');
-    let arrToys = [] as DOMStringMap[];
+    // let arrToys = [] as DOMStringMap[];
     const Filters = {} as { [key: string]: string[] };
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
@@ -60,13 +58,12 @@ class AppToysPage extends AppComponent {
         const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
         if (tClosestFItem.classList.contains('active')) {
           tClosestFItem.classList.remove('active');
-          arrToys = arrToys.filter((i) => i[attributeKey] !== arrParam);
+          // arrToys = arrToys.filter((i) => i[attributeKey] !== arrParam);
           Filters[attributeKey] = Filters[attributeKey].filter((attr) => attr !== arrParam);
-          console.log('Filters=>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
         } else {
           tClosestFItem.classList.add('active');
-          arrToys.push(tClosestFItem.dataset);
+          // arrToys.push(tClosestFItem.dataset);
           Array.isArray(Filters[attributeKey])
             ? Filters[attributeKey].push(arrParam as string)
             : (Filters[attributeKey] = [arrParam as string]);
@@ -152,7 +149,7 @@ export const appToysPage = new AppToysPage({
               <section class="filter">
                 <h4 class="filter__title">Любимые: </h4>
                 <ul class="filter__list favorite__only">
-                  <li class="filter__item">
+                  <li class="filter__item" data-favorite="1">
                     <input type="checkbox" id="favorite-only" name="favorite-only">
                   </li>
                 </ul>

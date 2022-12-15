@@ -7,7 +7,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '2',
@@ -17,7 +17,7 @@ const data = [
     shape: 'шар',
     color: 'зелёный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '3',
@@ -27,7 +27,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '4',
@@ -37,7 +37,7 @@ const data = [
     shape: 'фигурка',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '5',
@@ -47,7 +47,7 @@ const data = [
     shape: 'фигурка',
     color: 'красный',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '6',
@@ -57,7 +57,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '7',
@@ -67,7 +67,7 @@ const data = [
     shape: 'шар',
     color: 'белый',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '8',
@@ -77,7 +77,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '9',
@@ -87,7 +87,7 @@ const data = [
     shape: 'колокольчик',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '10',
@@ -97,7 +97,7 @@ const data = [
     shape: 'шар',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '11',
@@ -107,7 +107,7 @@ const data = [
     shape: 'шишка',
     color: 'белый',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '12',
@@ -117,7 +117,7 @@ const data = [
     shape: 'шар',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '13',
@@ -127,7 +127,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '14',
@@ -137,7 +137,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '15',
@@ -147,7 +147,7 @@ const data = [
     shape: 'колокольчик',
     color: 'синий',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '16',
@@ -157,7 +157,7 @@ const data = [
     shape: 'шишка',
     color: 'синий',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '17',
@@ -167,7 +167,7 @@ const data = [
     shape: 'шишка',
     color: 'красный',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '18',
@@ -177,7 +177,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '19',
@@ -187,7 +187,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '20',
@@ -197,7 +197,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '21',
@@ -207,7 +207,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '22',
@@ -217,7 +217,7 @@ const data = [
     shape: 'шишка',
     color: 'желтый',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '23',
@@ -227,7 +227,7 @@ const data = [
     shape: 'колокольчик',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '24',
@@ -237,7 +237,7 @@ const data = [
     shape: 'снежинка',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '25',
@@ -247,7 +247,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '26',
@@ -257,7 +257,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '27',
@@ -267,7 +267,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '28',
@@ -277,7 +277,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '29',
@@ -287,7 +287,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '30',
@@ -297,7 +297,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '31',
@@ -307,7 +307,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '32',
@@ -317,7 +317,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '33',
@@ -327,7 +327,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '34',
@@ -337,7 +337,7 @@ const data = [
     shape: 'шар',
     color: 'зелёный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '35',
@@ -347,7 +347,7 @@ const data = [
     shape: 'фигурка',
     color: 'желтый',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '36',
@@ -357,7 +357,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '37',
@@ -367,7 +367,7 @@ const data = [
     shape: 'шар',
     color: 'зелёный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '38',
@@ -377,7 +377,7 @@ const data = [
     shape: 'шар',
     color: 'синий',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '39',
@@ -387,7 +387,7 @@ const data = [
     shape: 'снежинка',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '40',
@@ -397,7 +397,7 @@ const data = [
     shape: 'снежинка',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '41',
@@ -407,7 +407,7 @@ const data = [
     shape: 'снежинка',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '42',
@@ -417,7 +417,7 @@ const data = [
     shape: 'шар',
     color: 'зелёный',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '43',
@@ -427,7 +427,7 @@ const data = [
     shape: 'снежинка',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '44',
@@ -437,7 +437,7 @@ const data = [
     shape: 'фигурка',
     color: 'красный',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '45',
@@ -447,7 +447,7 @@ const data = [
     shape: 'снежинка',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '46',
@@ -457,7 +457,7 @@ const data = [
     shape: 'фигурка',
     color: 'красный',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '47',
@@ -467,7 +467,7 @@ const data = [
     shape: 'фигурка',
     color: 'красный',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '48',
@@ -477,7 +477,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '49',
@@ -487,7 +487,7 @@ const data = [
     shape: 'снежинка',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '50',
@@ -497,7 +497,7 @@ const data = [
     shape: 'колокольчик',
     color: 'красный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '51',
@@ -507,7 +507,7 @@ const data = [
     shape: 'шишка',
     color: 'красный',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '52',
@@ -517,7 +517,7 @@ const data = [
     shape: 'шар',
     color: 'красный',
     size: 'большой',
-    favorite: true,
+    favorite: '1',
   },
   {
     num: '53',
@@ -527,7 +527,7 @@ const data = [
     shape: 'снежинка',
     color: 'белый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '54',
@@ -537,7 +537,7 @@ const data = [
     shape: 'шар',
     color: 'зелёный',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '55',
@@ -547,7 +547,7 @@ const data = [
     shape: 'фигурка',
     color: 'желтый',
     size: 'большой',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '56',
@@ -557,7 +557,7 @@ const data = [
     shape: 'фигурка',
     color: 'желтый',
     size: 'малый',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '57',
@@ -567,7 +567,7 @@ const data = [
     shape: 'фигурка',
     color: 'желтый',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '58',
@@ -577,7 +577,7 @@ const data = [
     shape: 'фигурка',
     color: 'белый',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '59',
@@ -587,7 +587,7 @@ const data = [
     shape: 'шар',
     color: 'желтый',
     size: 'средний',
-    favorite: false,
+    favorite: '0',
   },
   {
     num: '60',
@@ -597,7 +597,7 @@ const data = [
     shape: 'фигурка',
     color: 'белый',
     size: 'средний',
-    favorite: true,
+    favorite: '1',
   },
 ];
 
