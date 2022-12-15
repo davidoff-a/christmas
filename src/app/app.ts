@@ -5,24 +5,22 @@ import 'nouislider/dist/nouislider.css';
 import data from '../data';
 import { DataToy } from './pages/appToysPage';
 import { Card } from './components/cards';
-import {
-  dynamicSort,
-  filterToys,
-  filterToysByNumValues,
-} from './components/search';
+import { dynamicSort, filterToys, filterToysByNumValues } from './components/search';
 import { handleFavorite } from './components/favorites';
 import { cleanTag } from './utils/utils';
 
 interface IChunks {
   [keys: string]: string;
 }
+
 interface IAttributes {
   [keys: string]: string;
 }
 
 type filterTypes = keyof DataToy;
+
 export class App {
-  htmlChunks:IChunks = {
+  htmlChunks: IChunks = {
     page: '<div class="wrapper wrapper_column"></div>',
     header: `
   <header class="header">
@@ -301,21 +299,12 @@ export class App {
         $toysPage.insertAdjacentHTML('beforeend', this.htmlChunks.footer);
       }
     }
-    const $searchInput = document.querySelector(
-      '#searchField',
-    ) as HTMLElement;
+    const $searchInput = document.querySelector('#searchField') as HTMLElement;
     $searchInput.focus();
 
-    const $sliderQuantity = document.querySelector(
-      '#slider__quantity',
-    ) as noUiSlider.target;
-    const $sliderYear = document.querySelector(
-      '#slider__year',
-    ) as noUiSlider.target;
-    if (
-      $sliderYear instanceof HTMLElement
-      && $sliderQuantity instanceof HTMLElement
-    ) {
+    const $sliderQuantity = document.querySelector('#slider__quantity') as noUiSlider.target;
+    const $sliderYear = document.querySelector('#slider__year') as noUiSlider.target;
+    if ($sliderYear instanceof HTMLElement && $sliderQuantity instanceof HTMLElement) {
       noUiSlider.create($sliderYear, {
         start: [1940, 2020],
         connect: true,
@@ -352,46 +341,24 @@ export class App {
         snap: true,
         start: [1, 12],
       });
-      const $inputQuantityLeft: HTMLInputElement = document.querySelector(
-        '#slider__quantity_left',
-      ) as HTMLInputElement;
+      const $inputQuantityLeft: HTMLInputElement = document.querySelector('#slider__quantity_left') as HTMLInputElement;
       const $inputQuantityRight: HTMLInputElement = document.querySelector(
         '#slider__quantity_right',
       ) as HTMLInputElement;
-      const $inputYearLeft: HTMLInputElement = document.querySelector(
-        '#slider__year_left',
-      ) as HTMLInputElement;
-      const $inputYearRight: HTMLInputElement = document.querySelector(
-        '#slider__year_right',
-      ) as HTMLInputElement;
-      const filterQuantityInputs: HTMLInputElement[] = [
-        $inputQuantityLeft,
-        $inputQuantityRight,
-      ];
-      const filterYearInputs: HTMLInputElement[] = [
-        $inputYearLeft,
-        $inputYearRight,
-      ];
+      const $inputYearLeft: HTMLInputElement = document.querySelector('#slider__year_left') as HTMLInputElement;
+      const $inputYearRight: HTMLInputElement = document.querySelector('#slider__year_right') as HTMLInputElement;
+      const filterQuantityInputs: HTMLInputElement[] = [$inputQuantityLeft, $inputQuantityRight];
+      const filterYearInputs: HTMLInputElement[] = [$inputYearLeft, $inputYearRight];
       if ($sliderQuantity.noUiSlider !== undefined) {
         $sliderQuantity.noUiSlider.on('slide', (values, handle) => {
           filterQuantityInputs[handle].value = `${values[handle]}`;
-          this.renderCards(
-            filterToysByNumValues(data, 'count', [
-              Number(handle),
-              Number(values[handle]),
-            ]),
-          );
+          this.renderCards(filterToysByNumValues(data, 'count', [Number(handle), Number(values[handle])]));
         });
       }
       if ($sliderYear.noUiSlider !== undefined) {
         $sliderYear.noUiSlider.on('slide', (values, handle) => {
           filterYearInputs[handle].value = `${values[handle]}`;
-          this.renderCards(
-            filterToysByNumValues(data, 'year', [
-              Number(handle),
-              Number(values[handle]),
-            ]),
-          );
+          this.renderCards(filterToysByNumValues(data, 'year', [Number(handle), Number(values[handle])]));
         });
       }
     }
@@ -409,9 +376,7 @@ export class App {
   }
 
   initListeners(): void {
-    const $searchInput = document.querySelector(
-      '#searchField',
-    ) as HTMLInputElement;
+    const $searchInput = document.querySelector('#searchField') as HTMLInputElement;
     if ($searchInput instanceof HTMLInputElement) {
       $searchInput.addEventListener('input', () => {
         this.renderCards(filterToys(data, 'name', $searchInput.value));
@@ -420,17 +385,12 @@ export class App {
     const typesOfFilter: filterTypes[] = ['shape', 'color', 'size'];
     typesOfFilter.forEach((str) => this.addFilter(str as keyof DataToy));
 
-    const $sortDir = document.querySelector(
-      '#sortDirection',
-    ) as HTMLSelectElement;
-    const $sortField = document.querySelector(
-      '#sortField',
-    ) as HTMLSelectElement;
+    const $sortDir = document.querySelector('#sortDirection') as HTMLSelectElement;
+    const $sortField = document.querySelector('#sortField') as HTMLSelectElement;
     [$sortDir, $sortField].forEach((select) => {
       select.addEventListener('change', () => {
         const sortingDir: string = $sortDir.options[$sortDir.selectedIndex].value;
-        const sortingField = $sortField.options[$sortField.selectedIndex]
-          .value as keyof DataToy;
+        const sortingField = $sortField.options[$sortField.selectedIndex].value as keyof DataToy;
         this.renderCards(data.sort(dynamicSort(sortingField, sortingDir)));
       });
     });
@@ -448,10 +408,7 @@ export class App {
     if ($resetBtn instanceof HTMLElement) {
       $resetBtn.addEventListener('click', (event) => {
         const { target } = event;
-        if (
-          target instanceof HTMLElement
-          && target.classList.contains('reset')
-        ) {
+        if (target instanceof HTMLElement && target.classList.contains('reset')) {
           localStorage.removeItem('filteredArr');
         }
       });
@@ -463,10 +420,7 @@ export class App {
     if ($filter instanceof HTMLElement) {
       $filter.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
-        if (
-          target instanceof HTMLElement
-          && target.closest('li') instanceof HTMLElement
-        ) {
+        if (target instanceof HTMLElement && target.closest('li') instanceof HTMLElement) {
           const $closestLi = target.closest('li');
           if ($closestLi) {
             $closestLi.classList.toggle('active');
@@ -489,7 +443,7 @@ export class App {
     });
   }
 
-  createElement(selector: string, classes: string[], attributes?: IAttributes):HTMLElement {
+  createElement(selector: string, classes: string[], attributes?: IAttributes): HTMLElement {
     const $element = document.createElement(selector);
     if (classes !== undefined) {
       classes.forEach((className) => $element.classList.add(className));
