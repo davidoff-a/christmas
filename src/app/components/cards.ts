@@ -77,7 +77,7 @@ export class Card implements IToyInfoCard {
       [this.shape, 'Форма:'],
       [this.color, 'Цвет:'],
       [this.size, 'Размер:'],
-      [this.favorite ? 'да' : 'нет', 'Любимая:'],
+      [this.favorite === '1' ? 'да' : 'нет', 'Любимая:'],
     ];
 
     props.forEach((prop) => {

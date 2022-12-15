@@ -34,10 +34,12 @@ class AppToysPage extends AppComponent {
 
   filterCards(filterParameters: { [key: string]: string[] }, toys: DataToy[] = this.toysData): DataToy[] {
     const arrFilters = Object.entries(filterParameters);
-    return arrFilters.reduce((accToysByCat, curCats) => {
+    const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
       const [cat, arrValues] = curCats;
       return arrValues.reduce((accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)], [] as DataToy[]);
     }, toys as DataToy[]);
+    console.log('filtered toys =>', filteredToys.length ? filteredToys : toys);
+    return filteredToys.length ? filteredToys : toys;
   }
 
   render(): void {
@@ -49,8 +51,9 @@ class AppToysPage extends AppComponent {
     }
 
     const listOfFilters = document.querySelectorAll('.filter__list');
-    // let arrToys = [] as DOMStringMap[];
-    const Filters = {} as { [key: string]: string[] };
+    const Filters = { } as { [key: string]: string[] };
+    this.renderCards(this.filterCards(Filters, this.toysData));
+
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const tClosestFItem = target.closest('.filter__item') as HTMLElement;
@@ -58,17 +61,19 @@ class AppToysPage extends AppComponent {
         const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
         if (tClosestFItem.classList.contains('active')) {
           tClosestFItem.classList.remove('active');
-          // arrToys = arrToys.filter((i) => i[attributeKey] !== arrParam);
           Filters[attributeKey] = Filters[attributeKey].filter((attr) => attr !== arrParam);
+          if (Filters[attributeKey].length === 0) {
+            delete Filters[attributeKey];
+          }
+          console.log('Filters =>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
         } else {
           tClosestFItem.classList.add('active');
-          // arrToys.push(tClosestFItem.dataset);
           Array.isArray(Filters[attributeKey])
             ? Filters[attributeKey].push(arrParam as string)
             : (Filters[attributeKey] = [arrParam as string]);
+          console.log('Filters =>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
-          console.log('Filters=>', Filters);
         }
       }
     }));
@@ -89,7 +94,7 @@ export const appToysPage = new AppToysPage({
                   <li class="filter__item" data-shape="шар">
                     <img src="./assets/ball.svg" alt="ball" title="Украшения в форме шара" />
                   </li>
-                  <li class="filter__item" data-shape="колокол">
+                  <li class="filter__item" data-shape="колокольчик">
                     <img src="./assets/bell.svg" alt="bell" title="Украшения в форме колокольчика" />
                   </li>
                   <li class="filter__item" data-shape="шишка">
