@@ -4,10 +4,6 @@ class AppHeader extends AppComponent {
   constructor(config: { selector: string; template: string; events?: { [keys: string]: string } }) {
     super(config);
   }
-
-  // onMenuItemClick(event: Event) {
-  //   console.log(event);
-  // }
 }
 
 export const appHeader = new AppHeader({

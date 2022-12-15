@@ -1,18 +1,18 @@
-import * as noUiSlider from "nouislider";
+import * as noUiSlider from 'nouislider';
 
-import "nouislider/dist/nouislider.css";
+import 'nouislider/dist/nouislider.css';
 
-import data from "../data";
-
-import { Card } from "../app/components/cards";
+import data from '../data';
+import { DataToy } from './pages/appToysPage';
+import { Card } from './components/cards';
 import {
-  IData,
   dynamicSort,
   filterToys,
   filterToysByNumValues,
-} from "./components/search";
-import { handleFavorite } from "./components/favorites";
-import { cleanTag } from "./utils/utils";
+} from './components/search';
+import { handleFavorite } from './components/favorites';
+import { cleanTag } from './utils/utils';
+
 interface IChunks {
   [keys: string]: string;
 }
@@ -20,11 +20,11 @@ interface IAttributes {
   [keys: string]: string;
 }
 
-type filterTypes = keyof IData;
+type filterTypes = keyof DataToy;
 export class App {
   htmlChunks:IChunks = {
-    "page": '<div class="wrapper wrapper_column"></div>',
-    "header": `
+    page: '<div class="wrapper wrapper_column"></div>',
+    header: `
   <header class="header">
         <div class="container">
           <div class="wrapper">
@@ -64,7 +64,7 @@ export class App {
         </div>
       </header>
     `,
-    "home": `
+    home: `
   <div class="content">
         <div class="container">
           <div class="wrapper">
@@ -91,7 +91,7 @@ export class App {
         </div>
       </div>
   `,
-    "content": `
+    content: `
     <div class="content">
       <div class="container">
         <div class="wrapper">
@@ -214,7 +214,7 @@ export class App {
         </div>
       </div>
     </div>`,
-    "tree": `
+    tree: `
     <div class="container">
           <div class="wrapper">
             <aside class="side side_left">
@@ -235,13 +235,13 @@ export class App {
               <section class="block">
                 <div class="block__title">Выберите фон</div>
                 <div class="wrapper wrapper_wrap wrapper_start">
-                  
+                
                 </div>
               </section>
               <section class="block">
                 <div class="block__title">Выберите ёлку</div>
                 <div class="wrapper wrapper_wrap wrapper_start">
-                  
+                
                 </div>
               </section>
               <section class="block">
@@ -259,7 +259,7 @@ export class App {
               <section class="block">
                 <h4 class="block__title">Выберите игрушки</h4>
                 <div class="wrapper wrapper_start wrapper_wrap">
-                  
+                
                 </div>
               </section>
               <section class="block">
@@ -269,7 +269,7 @@ export class App {
           </div>
         </div>
     `,
-    "footer": `
+    footer: `
   <footer class= "footer">
     <div class="container">
       <div class="footer__wrapper">
@@ -277,56 +277,57 @@ export class App {
         <div class="rs-logo">
         <a href="https://rs.school/" class="footer__link"><img src="./assets/rss.svg" alt="rsschool logo"
             class="rss-logo" /></a>
-        </div>      
+        </div>
         </div>
       
     </div>
   </footer>
     `,
   };
+
   filterInfo = {
     appliedFilters: [],
     filteredItems: {},
   };
 
   init(): void {
-    const $body = document.querySelector("body");
+    const $body = document.querySelector('body');
     if ($body instanceof HTMLElement) {
-      $body.insertAdjacentHTML("beforeend", this.htmlChunks.page);
-      const $toysPage = document.querySelector(".wrapper.wrapper_column");
+      $body.insertAdjacentHTML('beforeend', this.htmlChunks.page);
+      const $toysPage = document.querySelector('.wrapper.wrapper_column');
       if ($toysPage instanceof HTMLElement) {
-        $toysPage.insertAdjacentHTML("beforeend", this.htmlChunks.header);
-        $toysPage.insertAdjacentHTML("beforeend", this.htmlChunks.home);
-        $toysPage.insertAdjacentHTML("beforeend", this.htmlChunks.footer);
+        $toysPage.insertAdjacentHTML('beforeend', this.htmlChunks.header);
+        $toysPage.insertAdjacentHTML('beforeend', this.htmlChunks.home);
+        $toysPage.insertAdjacentHTML('beforeend', this.htmlChunks.footer);
       }
     }
     const $searchInput = document.querySelector(
-      "#searchField"
+      '#searchField',
     ) as HTMLElement;
     $searchInput.focus();
 
     const $sliderQuantity = document.querySelector(
-      "#slider__quantity"
+      '#slider__quantity',
     ) as noUiSlider.target;
     const $sliderYear = document.querySelector(
-      "#slider__year"
+      '#slider__year',
     ) as noUiSlider.target;
     if (
-      $sliderYear instanceof HTMLElement &&
-      $sliderQuantity instanceof HTMLElement
+      $sliderYear instanceof HTMLElement
+      && $sliderQuantity instanceof HTMLElement
     ) {
       noUiSlider.create($sliderYear, {
         start: [1940, 2020],
         connect: true,
         range: {
           min: 1940,
-          "12%": 1950,
-          "24%": 1960,
-          "36%": 1970,
-          "48%": 1980,
-          "60%": 1990,
-          "72%": 2000,
-          "84%": 2010,
+          '12%': 1950,
+          '24%': 1960,
+          '36%': 1970,
+          '48%': 1980,
+          '60%': 1990,
+          '72%': 2000,
+          '84%': 2010,
           max: 2020,
         },
         snap: true,
@@ -336,32 +337,32 @@ export class App {
         connect: true,
         range: {
           min: 1,
-          "9%": 2,
-          "18%": 3,
-          "27%": 4,
-          "36%": 5,
-          "45%": 6,
-          "54%": 7,
-          "63%": 8,
-          "72%": 9,
-          "81%": 10,
-          "90%": 11,
+          '9%': 2,
+          '18%': 3,
+          '27%': 4,
+          '36%': 5,
+          '45%': 6,
+          '54%': 7,
+          '63%': 8,
+          '72%': 9,
+          '81%': 10,
+          '90%': 11,
           max: 12,
         },
         snap: true,
         start: [1, 12],
       });
       const $inputQuantityLeft: HTMLInputElement = document.querySelector(
-        "#slider__quantity_left"
+        '#slider__quantity_left',
       ) as HTMLInputElement;
       const $inputQuantityRight: HTMLInputElement = document.querySelector(
-        "#slider__quantity_right"
+        '#slider__quantity_right',
       ) as HTMLInputElement;
       const $inputYearLeft: HTMLInputElement = document.querySelector(
-        "#slider__year_left"
+        '#slider__year_left',
       ) as HTMLInputElement;
       const $inputYearRight: HTMLInputElement = document.querySelector(
-        "#slider__year_right"
+        '#slider__year_right',
       ) as HTMLInputElement;
       const filterQuantityInputs: HTMLInputElement[] = [
         $inputQuantityLeft,
@@ -372,24 +373,24 @@ export class App {
         $inputYearRight,
       ];
       if ($sliderQuantity.noUiSlider !== undefined) {
-        $sliderQuantity.noUiSlider.on("slide", (values, handle) => {
+        $sliderQuantity.noUiSlider.on('slide', (values, handle) => {
           filterQuantityInputs[handle].value = `${values[handle]}`;
           this.renderCards(
-            filterToysByNumValues(data, "count", [
+            filterToysByNumValues(data, 'count', [
               Number(handle),
               Number(values[handle]),
-            ])
+            ]),
           );
         });
       }
       if ($sliderYear.noUiSlider !== undefined) {
-        $sliderYear.noUiSlider.on("slide", (values, handle) => {
+        $sliderYear.noUiSlider.on('slide', (values, handle) => {
           filterYearInputs[handle].value = `${values[handle]}`;
           this.renderCards(
-            filterToysByNumValues(data, "year", [
+            filterToysByNumValues(data, 'year', [
               Number(handle),
               Number(values[handle]),
-            ])
+            ]),
           );
         });
       }
@@ -399,75 +400,76 @@ export class App {
     handleFavorite();
     this.initListeners();
   }
+
   changePage(chunkName: string): void {
-    const $content: HTMLElement = document.querySelector(".content")as HTMLElement;
+    const $content: HTMLElement = document.querySelector('.content') as HTMLElement;
     if ($content instanceof HTMLElement) {
       $content.innerHTML = this.htmlChunks[chunkName];
     }
   }
+
   initListeners(): void {
     const $searchInput = document.querySelector(
-      "#searchField"
+      '#searchField',
     ) as HTMLInputElement;
     if ($searchInput instanceof HTMLInputElement) {
-      $searchInput.addEventListener("input", () => {
-        this.renderCards(filterToys(data, "name", $searchInput.value));
+      $searchInput.addEventListener('input', () => {
+        this.renderCards(filterToys(data, 'name', $searchInput.value));
       });
     }
-    const typesOfFilter: filterTypes[] = ["shape", "color", "size"];
-    typesOfFilter.forEach((str) => this.addFilter(str as keyof IData));
+    const typesOfFilter: filterTypes[] = ['shape', 'color', 'size'];
+    typesOfFilter.forEach((str) => this.addFilter(str as keyof DataToy));
 
     const $sortDir = document.querySelector(
-      "#sortDirection"
+      '#sortDirection',
     ) as HTMLSelectElement;
     const $sortField = document.querySelector(
-      "#sortField"
+      '#sortField',
     ) as HTMLSelectElement;
     [$sortDir, $sortField].forEach((select) => {
-      select.addEventListener("change", () => {
+      select.addEventListener('change', () => {
         const sortingDir: string = $sortDir.options[$sortDir.selectedIndex].value;
         const sortingField = $sortField.options[$sortField.selectedIndex]
-          .value as keyof IData;
+          .value as keyof DataToy;
         this.renderCards(data.sort(dynamicSort(sortingField, sortingDir)));
       });
     });
-    const $filterFavorites: HTMLInputElement | null =
-      document.querySelector("#favorite-only");
+    const $filterFavorites: HTMLInputElement | null = document.querySelector('#favorite-only');
     if ($filterFavorites instanceof HTMLInputElement) {
-      $filterFavorites.addEventListener("click", () => {
+      $filterFavorites.addEventListener('click', () => {
         if ($filterFavorites.checked) {
-          this.renderCards(filterToys(data, "favorite", "true"));
+          this.renderCards(filterToys(data, 'favorite', 'true'));
         } else {
           this.renderCards(data);
         }
       });
     }
-    const $resetBtn = document.querySelector(".reset");
+    const $resetBtn = document.querySelector('.reset');
     if ($resetBtn instanceof HTMLElement) {
-      $resetBtn.addEventListener("click", (event) => {
-        const target = event.target;
+      $resetBtn.addEventListener('click', (event) => {
+        const { target } = event;
         if (
-          target instanceof HTMLElement &&
-          target.classList.contains("reset")
+          target instanceof HTMLElement
+          && target.classList.contains('reset')
         ) {
-          localStorage.removeItem("filteredArr");
+          localStorage.removeItem('filteredArr');
         }
       });
     }
   }
 
-  addFilter(type: keyof IData): void {
+  addFilter(type: keyof DataToy): void {
     const $filter = document.querySelector(`.${type}s`);
     if ($filter instanceof HTMLElement) {
-      $filter.addEventListener("click", (event) => {
+      $filter.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
         if (
-          target instanceof HTMLElement &&
-          target.closest("li") instanceof HTMLElement
+          target instanceof HTMLElement
+          && target.closest('li') instanceof HTMLElement
         ) {
-          const $closestLi = target.closest("li");
+          const $closestLi = target.closest('li');
           if ($closestLi) {
-            $closestLi.classList.toggle("active");
+            $closestLi.classList.toggle('active');
           }
           const filterAttr = $closestLi?.getAttribute(`data-${type}`) as string;
           this.renderCards(filterToys(data, type, filterAttr));
@@ -476,13 +478,13 @@ export class App {
     }
   }
 
-  renderCards(bigData: IData[]): void {
-    const $main = document.querySelector(".cards") as HTMLElement;
-    cleanTag(".cards");
+  renderCards(bigData: DataToy[]): void {
+    const $main = document.querySelector('.cards') as HTMLElement;
+    cleanTag('.cards');
     bigData.forEach((item) => {
       if ($main instanceof HTMLElement) {
         const toyInfo = new Card(item);
-        toyInfo.render(toyInfo.createCard(), ".cards");
+        toyInfo.render(toyInfo.createCard(), '.cards');
       }
     });
   }
@@ -493,8 +495,8 @@ export class App {
       classes.forEach((className) => $element.classList.add(className));
     }
     if (attributes !== undefined) {
-      Object.entries(attributes).forEach(attr=>$element.setAttribute(attr[0], attr[1]));
+      Object.entries(attributes).forEach((attr) => $element.setAttribute(attr[0], attr[1]));
     }
-      return $element;
+    return $element;
   }
 }

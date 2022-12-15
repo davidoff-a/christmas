@@ -1,4 +1,6 @@
-interface IToyInfoCard {
+import { DataToy } from '../pages/appToysPage';
+
+interface IToyInfoCard extends DataToy {
   num: string;
   name: string;
   count: string;
@@ -6,7 +8,7 @@ interface IToyInfoCard {
   shape: string;
   color: string;
   size: string;
-  favorite: boolean;
+  favorite: string;
 
   createCard(): HTMLElement;
 
@@ -28,7 +30,7 @@ export class Card implements IToyInfoCard {
 
   size: string;
 
-  favorite: boolean;
+  favorite: string;
 
   constructor(cardInfo: {
     num: string;
@@ -38,7 +40,7 @@ export class Card implements IToyInfoCard {
     shape: string;
     color: string;
     size: string;
-    favorite: boolean;
+    favorite: string;
   }) {
     this.num = cardInfo.num;
     this.name = cardInfo.name;
