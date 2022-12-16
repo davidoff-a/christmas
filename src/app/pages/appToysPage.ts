@@ -2,6 +2,7 @@ import { AppComponent } from '../appComponent';
 import data from '../../data';
 import { Card } from '../components/cards';
 
+type Direction = 'asc' | 'desc';
 export interface DataToy {
   num: string;
   name: string;
@@ -16,9 +17,15 @@ export interface DataToy {
 class AppToysPage extends AppComponent {
   toysData: DataToy[];
 
+  sortDir : Direction;
+
+  sortField: keyof DataToy;
+
   constructor(config: { selector: string; template: string }, toysData: DataToy[] = data) {
     super(config);
     this.toysData = toysData;
+    this.sortField = 'name';
+    this.sortDir = 'asc';
   }
 
   renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
@@ -36,10 +43,20 @@ class AppToysPage extends AppComponent {
     const arrFilters = Object.entries(filterParameters);
     const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
       const [cat, arrValues] = curCats;
-      return arrValues.reduce((accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)], [] as DataToy[]);
+      return arrValues.reduce(
+        (accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)],
+        [] as DataToy[],
+      );
     }, toys as DataToy[]);
-    console.log('filtered toys =>', filteredToys.length ? filteredToys : toys);
-    return filteredToys.length ? filteredToys : toys;
+    const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
+      const res = dir === 'asc' ? 1 : -1;
+
+      return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
+    };
+
+    const result = filteredToys.length ? filteredToys : toys;
+
+    return result.sort(filteredByField(this.sortField, this.sortDir));
   }
 
   render(): void {
@@ -51,7 +68,27 @@ class AppToysPage extends AppComponent {
     }
 
     const listOfFilters = document.querySelectorAll('.filter__list');
-    const Filters = { } as { [key: string]: string[] };
+    const Filters = {} as { [key: string]: string[] };
+
+    const sortField = document.getElementById('sortField') as HTMLInputElement;
+    const sortDir = document.getElementById('sortDirection') as HTMLInputElement;
+
+    sortField.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        this.sortField = target.value as keyof DataToy;
+      }
+      this.renderCards(this.filterCards(Filters, this.toysData));
+    });
+
+    sortDir.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        this.sortDir = target.value as Direction;
+      }
+      this.renderCards(this.filterCards(Filters, this.toysData));
+    });
+
     this.renderCards(this.filterCards(Filters, this.toysData));
 
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
@@ -75,6 +112,8 @@ class AppToysPage extends AppComponent {
           console.log('Filters =>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
         }
+        // TODO: add sorting by name and year
+        // TODO: add ascending and descending sorting
       }
     }));
   }
