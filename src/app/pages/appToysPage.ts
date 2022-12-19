@@ -1,8 +1,12 @@
+import noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
+
 import { AppComponent } from '../appComponent';
 import data from '../../data';
 import { Card } from '../components/cards';
 
 type Direction = 'asc' | 'desc';
+
 export interface DataToy {
   num: string;
   name: string;
@@ -17,7 +21,7 @@ export interface DataToy {
 class AppToysPage extends AppComponent {
   toysData: DataToy[];
 
-  sortDir : Direction;
+  sortDir: Direction;
 
   sortField: keyof DataToy;
 
@@ -66,6 +70,39 @@ class AppToysPage extends AppComponent {
     } else {
       this.el.innerHTML = this.template;
     }
+    // const sliderRound = document.getElementById('slider-round') as HTMLElement;
+    const sliderYear = document.getElementById('slider__quantity') as HTMLElement;
+    const sliderQuantity = document.getElementById('slider__quantity') as HTMLElement;
+
+    // noUiSlider.create(sliderRound, {
+    //   start: [1, 12],
+    //   connect: true,
+    //   step: 1,
+    //   range: {
+    //     min: 1,
+    //     max: 12,
+    //   },
+    // });
+
+    noUiSlider.create(sliderQuantity, {
+      start: [1, 12],
+      connect: true,
+      step: 1,
+      range: {
+        min: 1,
+        max: 12,
+      },
+    });
+
+    noUiSlider.create(sliderYear, {
+      start: [1940, 2010],
+      connect: true,
+      step: 5,
+      range: {
+        min: 1940,
+        max: 2010,
+      },
+    });
 
     const listOfFilters = document.querySelectorAll('.filter__list');
     const Filters = {} as { [key: string]: string[] };
@@ -102,18 +139,14 @@ class AppToysPage extends AppComponent {
           if (Filters[attributeKey].length === 0) {
             delete Filters[attributeKey];
           }
-          console.log('Filters =>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
         } else {
           tClosestFItem.classList.add('active');
           Array.isArray(Filters[attributeKey])
             ? Filters[attributeKey].push(arrParam as string)
             : (Filters[attributeKey] = [arrParam as string]);
-          console.log('Filters =>', Filters);
           this.renderCards(this.filterCards(Filters, this.toysData));
         }
-        // TODO: add sorting by name and year
-        // TODO: add ascending and descending sorting
       }
     }));
   }
@@ -129,7 +162,7 @@ export const appToysPage = new AppToysPage({
               <h3 class="block__title">Фильтры</h3>
               <section class="filter">
                 <h4 class="filter__title">Форма: </h4>
-                <ul class="filter__list shapes">
+                <ul class="filter__list row shapes">
                   <li class="filter__item" data-shape="шар">
                     <img src="./assets/ball.svg" alt="ball" title="Украшения в форме шара" />
                   </li>
@@ -149,7 +182,7 @@ export const appToysPage = new AppToysPage({
               </section>
               <section class="filter">
                 <h4 class="filter__title">Цвет: </h4>
-                <ul class="filter__list colors">
+                <ul class="filter__list row colors">
                   <li class="filter__item" data-color="белый">
                     <div class="filter__color white">
 
@@ -178,7 +211,7 @@ export const appToysPage = new AppToysPage({
               </section>
               <section class="filter">
                 <h4 class="filter__title">Размер: </h4>
-                <ul class="filter__list sizes">
+                <ul class="filter__list row sizes">
                   <li class="filter__item large" data-size="большой">
                     <img src="./assets/ball.svg" alt="ball" title="Большие укражения" />
                   </li>
@@ -192,7 +225,7 @@ export const appToysPage = new AppToysPage({
               </section>
               <section class="filter">
                 <h4 class="filter__title">Любимые: </h4>
-                <ul class="filter__list favorite__only">
+                <ul class="filter__list row favorite__only">
                   <li class="filter__item" data-favorite="1">
                     <input type="checkbox" id="favorite-only" name="favorite-only">
                   </li>
@@ -201,7 +234,7 @@ export const appToysPage = new AppToysPage({
             </article>
             <article class="block">
               <h3 class="block__title">Сортировка</h3>
-              <section class="filter column">
+              <section class="filter col">
                 <select class="sorting" id="sortField">
                   <option value="name">По названию</option>
                   <option value="year">По году</option>
@@ -212,23 +245,29 @@ export const appToysPage = new AppToysPage({
                 </select>
               </section>
             </article>
-            <article class="block">
+            <article class="block block__high">
               <h3 class="block__title">Фильтры по диапазону</h3>
-              <section class="filter column column_160">
-                <div class="slider slider-round" id="slider__quantity"></div>
-                <div class="filter__wrapper">
-                  <input type="text" id="slider__quantity_left" value="1"></input>
-
-                  <input type="text" id="slider__quantity_right" value="12"></input>
-                </div>
-
-                <div class="slider slider-round" id="slider__year"></div>
-                <div class="filter__wrapper">
-                  <input type="text" id="slider__year_left" value="1940"></input>
-
-                  <input type="text" id="slider__year_right" value="2021"></input>
-                </div>
-
+              <section class="filter col">
+<!--                <div class="slider slider-round" id="slider__quantity">Количество</div>-->
+                <ul class="filter__list row col">
+                  <li class="filter__item range">
+                    <h4 class="filter__title">Количество</h4>
+                    <div class="slider slider-styled slider-round" id="slider__quantity"></div>
+                    <div class="slider__controls row">
+                      <input type="text" class="slider__input" id="quantity_min" value="1">
+                      <input type="text" class="slider__input" id="quantity_max" value="12">
+                    </div>
+                </li>
+<!--                <li class="filter__item">-->
+<!--                  <h4 class="filter__title">По году</h4>-->
+<!--                  <div class="slider slider-styled slider-round" id="slider__year"></div>-->
+<!--                  <div class="row">-->
+<!--                    <input type="text" class="slider__input" id="year_min" value="1940">-->
+<!--                    <input type="text" class="slider__input" id="year_max" value="2010">-->
+<!--                  </div>-->
+<!--                  -->
+<!--                  </li>-->
+                </ul>
               </section>
             </article>
             <article class="block">

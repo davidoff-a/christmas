@@ -1,4 +1,3 @@
-
 .filter {
   height: 35px;
   margin-bottom: 5px;
@@ -6,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // flex-wrap:wrap;
 
   &__title {
     margin-right: 20px;
@@ -17,9 +15,6 @@
   }
 
   &__list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
     flex-wrap: wrap;
   }
 
@@ -30,14 +25,19 @@
     position: relative;
     border: 2px solid rgba(157, 243, 255, 0);
     border-radius: 5px;
+    &.range{
+      width: 100%;
+      margin: 0 auto;
+    }
+
     &.active {
       border: 2px solid rgba(157, 243, 255, 0.2);
+
       &:hover {
         border: 2px solid rgba(157, 243, 255, 0.5);
-        // filter: brightness(0) saturate(100%) invert(66%) sepia(94%) saturate(400%) hue-rotate(345deg) brightness(100%)
-        //   contrast(103%);
       }
     }
+
     & img {
       position: absolute;
       left: 50%;
@@ -46,14 +46,17 @@
       height: 90%;
       transform: translate(-50%, -50%);
     }
+
     &.large img {
       width: 35px;
       height: auto;
     }
+
     &.middle img {
       width: 30px;
       height: auto;
     }
+
     &.small img {
       width: 28px;
       height: auto;
@@ -66,28 +69,44 @@
     height: 90%;
     border: 2px solid rgba(157, 243, 255, 0);
     border-radius: 5px;
+
     &:hover {
-      border: 3px solid;
-      border: 0, 0, 10px, #1e5a5a;
+      transform: scale(1.3);
+      //border: 3px solid #1e5a5a;
+      //border: 10px;
     }
+
     &.active {
       border: 3px solid rgba(30, 90, 90, 1);
     }
+
     &.white {
       background-color: #ffffff;
     }
+
     &.yellow {
       background-color: #fdd700;
     }
+
     &.red {
       background-color: #fd0000;
     }
+
     &.blue {
       background-color: #2299eb;
     }
+
     &.green {
       background-color: #08aa05;
     }
+  }
+
+  &__wrapper {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -95,8 +114,7 @@
   position: absolute;
   left: 27%;
   top: 33%;
-  transform: translate(-50%, -50%);
-  transform: scale(2);
+  transform: translate(-50%, -50%) scale(2);
   margin: 0;
 }
 
@@ -112,6 +130,49 @@
   @extend %form-controls;
   height: 20px;
   font-size: 16px;
+}
+
+.slider {
+  width: 100%;
+
+  &__controls{
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  &__input{
+    width: 40px;
+    flex: 0 0 40%;
+  }
+
+  &.slider-round {
+    height: 10px;
+
+    & .noUi-handle {
+      height: 18px;
+      width: 18px;
+      top: -5px;
+      right: -9px; /* half the width */
+      border-radius: 9px;
+    }
+  }
+
+  &.slider-styled {
+    & .noUi-handle {
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 18px;
+  height: 8px;
+  right: -10px;
+  top: -6px;
 }
 
 //TODO fix icon's behaviour on small resolutions. Maybe fix container width is needed.
