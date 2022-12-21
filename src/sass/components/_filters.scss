@@ -2,9 +2,9 @@
   height: 35px;
   margin-bottom: 5px;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  //display: flex;
+  //justify-content: space-between;
+  //align-items: center;
 
   &__title {
     margin-right: 20px;
@@ -26,7 +26,7 @@
     border: 2px solid rgba(157, 243, 255, 0);
     border-radius: 5px;
     &.range{
-      width: 100%;
+      width: 90%;
       margin: 0 auto;
     }
 
@@ -126,6 +126,10 @@
   cursor: pointer;
 }
 
+.shapes, .colors, .sizes{
+  justify-content: flex-end;
+}
+
 .sorting {
   @extend %form-controls;
   height: 20px;
@@ -142,7 +146,12 @@
 
   &__input{
     width: 40px;
-    flex: 0 0 40%;
+    flex: 0 0 40px;
+    color: $main-tColor;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
   }
 
   &.slider-round {

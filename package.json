@@ -52,6 +52,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "nouislider": "^15.5.0"
+    "@types/wnumb": "^1.2.1",
+    "nouislider": "^15.5.0",
+    "wnumb": "^1.2.0"
   }
 }

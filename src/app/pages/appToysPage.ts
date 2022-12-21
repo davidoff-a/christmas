@@ -1,4 +1,7 @@
-import noUiSlider from 'nouislider';
+// import noUiSlider from 'nouislider';
+import * as noUiSlider from 'nouislider';
+import wNumb from 'wnumb';
+// import { API } from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 
 import { AppComponent } from '../appComponent';
@@ -6,6 +9,10 @@ import data from '../../data';
 import { Card } from '../components/cards';
 
 type Direction = 'asc' | 'desc';
+
+// interface Instance extends HTMLElement {
+//   noUiSlider: noUiSlider
+// }
 
 export interface DataToy {
   num: string;
@@ -72,7 +79,10 @@ class AppToysPage extends AppComponent {
     }
     // const sliderRound = document.getElementById('slider-round') as HTMLElement;
     const sliderYear = document.getElementById('slider__quantity') as HTMLElement;
-    const sliderQuantity = document.getElementById('slider__quantity') as HTMLElement;
+    const sliderQuantity = document.getElementById('slider__quantity') as noUiSlider.target;
+    const inputQtyMin = document.getElementById('quantity_min') as HTMLInputElement;
+    const inputQtyMax = document.getElementById('quantity_max') as HTMLInputElement;
+    const qtyInputs = [inputQtyMin, inputQtyMax];
 
     // noUiSlider.create(sliderRound, {
     //   start: [1, 12],
@@ -92,8 +102,18 @@ class AppToysPage extends AppComponent {
         min: 1,
         max: 12,
       },
+      format: wNumb({
+        decimals: 0,
+      }),
     });
 
+    if (sliderQuantity.noUiSlider) {
+      sliderQuantity.noUiSlider.on('update', (values, handle) => {
+        console.log('values =>', values);
+        console.log('handle =>', handle);
+        qtyInputs[handle].value = `${values[handle]}`;
+      });
+    }
     noUiSlider.create(sliderYear, {
       start: [1940, 2010],
       connect: true,
@@ -102,6 +122,9 @@ class AppToysPage extends AppComponent {
         min: 1940,
         max: 2010,
       },
+      format: wNumb({
+        decimals: 0,
+      }),
     });
 
     const listOfFilters = document.querySelectorAll('.filter__list');
@@ -160,7 +183,7 @@ export const appToysPage = new AppToysPage({
           <aside class="controls">
             <article class="block">
               <h3 class="block__title">Фильтры</h3>
-              <section class="filter">
+              <section class="filter row">
                 <h4 class="filter__title">Форма: </h4>
                 <ul class="filter__list row shapes">
                   <li class="filter__item" data-shape="шар">
@@ -180,7 +203,7 @@ export const appToysPage = new AppToysPage({
                   </li>
                 </ul>
               </section>
-              <section class="filter">
+              <section class="filter row">
                 <h4 class="filter__title">Цвет: </h4>
                 <ul class="filter__list row colors">
                   <li class="filter__item" data-color="белый">
@@ -209,7 +232,7 @@ export const appToysPage = new AppToysPage({
                   </li>
                 </ul>
               </section>
-              <section class="filter">
+              <section class="filter row">
                 <h4 class="filter__title">Размер: </h4>
                 <ul class="filter__list row sizes">
                   <li class="filter__item large" data-size="большой">
@@ -223,7 +246,7 @@ export const appToysPage = new AppToysPage({
                   </li>
                 </ul>
               </section>
-              <section class="filter">
+              <section class="filter row">
                 <h4 class="filter__title">Любимые: </h4>
                 <ul class="filter__list row favorite__only">
                   <li class="filter__item" data-favorite="1">
@@ -234,7 +257,7 @@ export const appToysPage = new AppToysPage({
             </article>
             <article class="block">
               <h3 class="block__title">Сортировка</h3>
-              <section class="filter col">
+              <section class="filter row">
                 <select class="sorting" id="sortField">
                   <option value="name">По названию</option>
                   <option value="year">По году</option>
@@ -253,20 +276,22 @@ export const appToysPage = new AppToysPage({
                   <li class="filter__item range">
                     <h4 class="filter__title">Количество</h4>
                     <div class="slider slider-styled slider-round" id="slider__quantity"></div>
-                    <div class="slider__controls row">
+                    <div class="row slider__controls">
                       <input type="text" class="slider__input" id="quantity_min" value="1">
                       <input type="text" class="slider__input" id="quantity_max" value="12">
                     </div>
                 </li>
-<!--                <li class="filter__item">-->
-<!--                  <h4 class="filter__title">По году</h4>-->
-<!--                  <div class="slider slider-styled slider-round" id="slider__year"></div>-->
-<!--                  <div class="row">-->
-<!--                    <input type="text" class="slider__input" id="year_min" value="1940">-->
-<!--                    <input type="text" class="slider__input" id="year_max" value="2010">-->
-<!--                  </div>-->
-<!--                  -->
-<!--                  </li>-->
+                </ul>
+                <ul class="filter__list row col">
+                <li class="filter__item range">
+                  <h4 class="filter__title">По году</h4>
+                  <div class="slider slider-styled slider-round" id="slider__year"></div>
+                  <div class="row">
+                    <input type="text" class="slider__input" id="year_min" value="1940">
+                    <input type="text" class="slider__input" id="year_max" value="2010">
+                  </div>
+                  
+                  </li>
                 </ul>
               </section>
             </article>
