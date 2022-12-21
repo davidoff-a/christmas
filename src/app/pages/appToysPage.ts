@@ -78,11 +78,15 @@ class AppToysPage extends AppComponent {
       this.el.innerHTML = this.template;
     }
     // const sliderRound = document.getElementById('slider-round') as HTMLElement;
-    const sliderYear = document.getElementById('slider__quantity') as HTMLElement;
+    const sliderYear = document.getElementById('slider__year') as noUiSlider.target;
     const sliderQuantity = document.getElementById('slider__quantity') as noUiSlider.target;
     const inputQtyMin = document.getElementById('quantity_min') as HTMLInputElement;
     const inputQtyMax = document.getElementById('quantity_max') as HTMLInputElement;
+    const inputYearMin = document.getElementById('year_min') as HTMLInputElement;
+    const inputYearMax = document.getElementById('year_max') as HTMLInputElement;
+
     const qtyInputs = [inputQtyMin, inputQtyMax];
+    const yearInputs = [inputYearMin, inputYearMax];
 
     // noUiSlider.create(sliderRound, {
     //   start: [1, 12],
@@ -109,8 +113,6 @@ class AppToysPage extends AppComponent {
 
     if (sliderQuantity.noUiSlider) {
       sliderQuantity.noUiSlider.on('update', (values, handle) => {
-        console.log('values =>', values);
-        console.log('handle =>', handle);
         qtyInputs[handle].value = `${values[handle]}`;
       });
     }
@@ -126,6 +128,12 @@ class AppToysPage extends AppComponent {
         decimals: 0,
       }),
     });
+
+    if (sliderYear.noUiSlider) {
+      sliderYear.noUiSlider.on('update', (values, handle) => {
+        yearInputs[handle].value = `${values[handle]}`;
+      });
+    }
 
     const listOfFilters = document.querySelectorAll('.filter__list');
     const Filters = {} as { [key: string]: string[] };
@@ -282,11 +290,14 @@ export const appToysPage = new AppToysPage({
                     </div>
                 </li>
                 </ul>
-                <ul class="filter__list row col">
+                
+              </section>
+              <section class="filter col">
+              <ul class="filter__list row col">
                 <li class="filter__item range">
                   <h4 class="filter__title">По году</h4>
                   <div class="slider slider-styled slider-round" id="slider__year"></div>
-                  <div class="row">
+                  <div class="row slider__controls">
                     <input type="text" class="slider__input" id="year_min" value="1940">
                     <input type="text" class="slider__input" id="year_max" value="2010">
                   </div>
