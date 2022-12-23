@@ -1,5 +1,5 @@
 import { DataToy } from '../pages/appToysPage';
-
+// TODO: why I can't use DataToy interface
 interface IToyInfoCard extends DataToy {
   num: string;
   name: string;

@@ -5,7 +5,9 @@ function filterToys(bigData: DataToy[], filterField: keyof DataToy, filterQuery:
   if (filterField === 'favorite') {
     return bigData.filter((item: DataToy) => item[filterField]);
   }
-  const filteredData: DataToy[] = bigData.filter((item: DataToy) => item[filterField].toLowerCase().includes(filterQuery.toLowerCase()));
+  const filteredData: DataToy[] = bigData.filter((item: DataToy) =>
+    item[filterField].toLowerCase().includes(filterQuery.toLowerCase())
+  );
   localStorage.setItem('filteredArr', JSON.stringify(filteredData));
 
   return filteredData;
@@ -26,7 +28,7 @@ function filterToysByNumValues(bigData: DataToy[], filterField: keyof DataToy, f
     min = minMaxValues(data, filterField, 'asc');
   }
   const filteredData = bigData.filter(
-    (item: DataToy) => Number(item[filterField]) <= max && Number(item[filterField]) >= min,
+    (item: DataToy) => Number(item[filterField]) <= max && Number(item[filterField]) >= min
   );
   localStorage.setItem('filteredArr', JSON.stringify(filteredData));
 

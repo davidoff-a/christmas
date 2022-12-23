@@ -1,7 +1,5 @@
-// import noUiSlider from 'nouislider';
 import * as noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
-// import { API } from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 
 import { AppComponent } from '../appComponent';
@@ -9,10 +7,6 @@ import data from '../../data';
 import { Card } from '../components/cards';
 
 type Direction = 'asc' | 'desc';
-
-// interface Instance extends HTMLElement {
-//   noUiSlider: noUiSlider
-// }
 
 export interface DataToy {
   num: string;
@@ -32,11 +26,20 @@ class AppToysPage extends AppComponent {
 
   sortField: keyof DataToy;
 
+  filters: { [key: string]: string[] };
+
+  rangeFilters: { [key: string]: string[] };
+
   constructor(config: { selector: string; template: string }, toysData: DataToy[] = data) {
     super(config);
     this.toysData = toysData;
     this.sortField = 'name';
     this.sortDir = 'asc';
+    this.filters = {};
+    this.rangeFilters = {
+      count: ['1', '1'],
+      year: ['1', '1'],
+    };
   }
 
   renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
@@ -50,8 +53,12 @@ class AppToysPage extends AppComponent {
     }
   }
 
-  filterCards(filterParameters: { [key: string]: string[] }, toys: DataToy[] = this.toysData): DataToy[] {
-    const arrFilters = Object.entries(filterParameters);
+  filterCards(
+    fParams: { [key: string]: string[] },
+    rParams: { [key: string]: string[] },
+    toys: DataToy[] = this.toysData,
+  ): DataToy[] {
+    const arrFilters = Object.entries(fParams);
     const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
       const [cat, arrValues] = curCats;
       return arrValues.reduce(
@@ -59,15 +66,27 @@ class AppToysPage extends AppComponent {
         [] as DataToy[],
       );
     }, toys as DataToy[]);
+
+    const rFilters = Object.entries(rParams);
+    const filtered = rFilters.reduce((accToysByCat, curCats) => {
+      const [cat, arrValues] = curCats;
+      return arrValues.reduce(
+        (accToys, curValue, idx) => [
+          ...accToys,
+          ...accToysByCat.filter((item) => (idx === 0 ? item[cat as keyof DataToy] >= curValue : item[cat as keyof DataToy] >= curValue)),
+        ],
+        [] as DataToy[],
+      );
+    }, filteredToys as DataToy[]);
+
     const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
       const res = dir === 'asc' ? 1 : -1;
-
       return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
     };
 
-    const result = filteredToys.length ? filteredToys : toys;
+    // const result = filtered.length ? filtered : toys;
 
-    return result.sort(filteredByField(this.sortField, this.sortDir));
+    return filtered.sort(filteredByField(this.sortField, this.sortDir));
   }
 
   render(): void {
@@ -87,24 +106,45 @@ class AppToysPage extends AppComponent {
 
     const qtyInputs = [inputQtyMin, inputQtyMax];
     const yearInputs = [inputYearMin, inputYearMax];
+    const sorting = (field: keyof DataToy): DataToy[] => data.sort((a, b) => (Number(a[field]) < Number(b[field]) ? 1 : -1));
+    const sorted = (field: keyof DataToy): DataToy[] => sorting(field);
+    const getMax = (field: keyof DataToy) => sorted(field)[0][field];
+    const getMin = (field: keyof DataToy) => sorted(field).reverse()[0][field];
 
-    // noUiSlider.create(sliderRound, {
-    //   start: [1, 12],
-    //   connect: true,
-    //   step: 1,
-    //   range: {
-    //     min: 1,
-    //     max: 12,
-    //   },
-    // });
+    const resetBtn = document.querySelector('.reset') as HTMLElement;
+    const resetFilters = () => {
+      this.rangeFilters.count[0] = `${getMin('count')}`;
+      this.rangeFilters.count[1] = `${getMax('count')}`;
+      this.rangeFilters.year[0] = `${getMin('year')}`;
+      this.rangeFilters.year[1] = `${getMax('year')}`;
+    };
+    resetBtn.addEventListener('click', () => {
+      const fItems = document.querySelectorAll('.filter__item');
+      const favorite = document.getElementById('favorite-only') as HTMLInputElement;
+
+      resetFilters();
+      this.filters = {};
+      this.sortField = 'name';
+      sortField.value = 'name';
+      this.sortDir = 'asc';
+      sortDir.value = 'asc';
+      sliderQuantity.noUiSlider!.set([getMin('count'), getMax('count')]);
+      sliderYear.noUiSlider!.set([getMin('year'), getMax('year')]);
+
+      Array.from(fItems).map((item) => item.classList.remove('active'));
+      favorite.checked = false;
+      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+    });
+
+    resetFilters();
 
     noUiSlider.create(sliderQuantity, {
-      start: [1, 12],
+      start: [getMin('count'), getMax('count')],
       connect: true,
       step: 1,
       range: {
-        min: 1,
-        max: 12,
+        min: +getMin('count'),
+        max: +getMax('count'),
       },
       format: wNumb({
         decimals: 0,
@@ -114,15 +154,17 @@ class AppToysPage extends AppComponent {
     if (sliderQuantity.noUiSlider) {
       sliderQuantity.noUiSlider.on('update', (values, handle) => {
         qtyInputs[handle].value = `${values[handle]}`;
+        this.rangeFilters.count[handle] = `${values[handle]}`;
+        this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
       });
     }
     noUiSlider.create(sliderYear, {
-      start: [1940, 2010],
+      start: [getMin('year'), getMax('year')],
       connect: true,
       step: 5,
       range: {
-        min: 1940,
-        max: 2010,
+        min: +getMin('year'),
+        max: +getMax('year'),
       },
       format: wNumb({
         decimals: 0,
@@ -132,21 +174,61 @@ class AppToysPage extends AppComponent {
     if (sliderYear.noUiSlider) {
       sliderYear.noUiSlider.on('update', (values, handle) => {
         yearInputs[handle].value = `${values[handle]}`;
+        this.rangeFilters.year[handle] = `${values[handle]}`;
+        this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
       });
     }
 
+    inputQtyMin.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = sliderQuantity.noUiSlider!.get() as string[];
+        rangeLimit[0] = target.value;
+        sliderQuantity.noUiSlider!.set(rangeLimit);
+      }
+    });
+
+    inputQtyMax.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = sliderQuantity.noUiSlider!.get() as string[];
+        rangeLimit[1] = target.value;
+        sliderQuantity.noUiSlider!.set(rangeLimit);
+      }
+    });
+
+    inputYearMin.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = sliderYear.noUiSlider!.get() as string[];
+        rangeLimit[0] = target.value;
+        sliderYear.noUiSlider!.set(rangeLimit);
+      }
+    });
+
+    inputYearMax.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = sliderYear.noUiSlider!.get() as string[];
+        rangeLimit[1] = target.value;
+        sliderYear.noUiSlider!.set(rangeLimit);
+      }
+    });
+
+    // TODO: optimize eventHandlers
+
     const listOfFilters = document.querySelectorAll('.filter__list');
-    const Filters = {} as { [key: string]: string[] };
+    // const Filters = {} as { [key: string]: string[] };
 
     const sortField = document.getElementById('sortField') as HTMLInputElement;
     const sortDir = document.getElementById('sortDirection') as HTMLInputElement;
-
+    // TODO: improve this code with universal handler with generic type
     sortField.addEventListener('change', (e) => {
       const target = e.target as HTMLInputElement;
       if (target) {
         this.sortField = target.value as keyof DataToy;
       }
-      this.renderCards(this.filterCards(Filters, this.toysData));
+      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
     });
 
     sortDir.addEventListener('change', (e) => {
@@ -154,29 +236,31 @@ class AppToysPage extends AppComponent {
       if (target) {
         this.sortDir = target.value as Direction;
       }
-      this.renderCards(this.filterCards(Filters, this.toysData));
+      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
     });
 
-    this.renderCards(this.filterCards(Filters, this.toysData));
-
+    this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+    console.log('list of filters =>', listOfFilters);
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const tClosestFItem = target.closest('.filter__item') as HTMLElement;
-      if (tClosestFItem) {
+      if (!Object.keys(tClosestFItem).length) {
+        console.log('closest item =>', tClosestFItem.dataset);
+        // TODO: add checking for empty object dataset
         const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
         if (tClosestFItem.classList.contains('active')) {
           tClosestFItem.classList.remove('active');
-          Filters[attributeKey] = Filters[attributeKey].filter((attr) => attr !== arrParam);
-          if (Filters[attributeKey].length === 0) {
-            delete Filters[attributeKey];
+          this.filters[attributeKey] = this.filters[attributeKey].filter((attr) => attr !== arrParam);
+          if (this.filters[attributeKey].length === 0) {
+            delete this.filters[attributeKey];
           }
-          this.renderCards(this.filterCards(Filters, this.toysData));
+          this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
         } else {
           tClosestFItem.classList.add('active');
-          Array.isArray(Filters[attributeKey])
-            ? Filters[attributeKey].push(arrParam as string)
-            : (Filters[attributeKey] = [arrParam as string]);
-          this.renderCards(this.filterCards(Filters, this.toysData));
+          Array.isArray(this.filters[attributeKey])
+            ? this.filters[attributeKey].push(arrParam as string)
+            : (this.filters[attributeKey] = [arrParam as string]);
+          this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
         }
       }
     }));
