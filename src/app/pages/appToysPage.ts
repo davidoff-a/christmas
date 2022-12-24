@@ -42,6 +42,7 @@ class AppToysPage extends AppComponent {
     };
   }
 
+  // TODO: I have to investigate reasons of multiplying toys
   renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
     const $cardsContainer: HTMLElement = document.querySelector(selector) as HTMLElement;
     if ($cardsContainer instanceof HTMLElement) {

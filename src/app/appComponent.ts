@@ -1,13 +1,13 @@
-import { Component } from "./core/component";
+import { Component } from './core/component';
 
-export class AppComponent extends Component{
-  constructor(config: {selector: string, template: string}) {
+export class AppComponent extends Component {
+  constructor(config: { selector: string; template: string }) {
     super(config);
   }
 }
 
 export const appComponent = new AppComponent({
-  selector: "body",
+  selector: 'body',
   template: `
     <div class="wrapper wrapper_column">
       <header class="header"></header>

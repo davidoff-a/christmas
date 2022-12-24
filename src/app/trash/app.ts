@@ -2,12 +2,12 @@ import * as noUiSlider from 'nouislider';
 
 import 'nouislider/dist/nouislider.css';
 
-import data from '../data';
-import { DataToy } from './pages/appToysPage';
-import { Card } from './components/cards';
-import { dynamicSort, filterToys, filterToysByNumValues } from './components/search';
-import { handleFavorite } from './components/favorites';
-import { cleanTag } from './utils/utils';
+import data from '../../data';
+import { DataToy } from '../pages/appToysPage';
+import { Card } from '../components/cards';
+import { dynamicSort, filterToys, filterToysByNumValues } from './search';
+import { handleFavorite } from './favorites';
+import { cleanTag } from '../utils/utils';
 
 interface IChunks {
   [keys: string]: string;

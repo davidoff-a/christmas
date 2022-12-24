@@ -1,4 +1,4 @@
-import { AppComponent } from "../appComponent";
+import { AppComponent } from '../appComponent';
 
 class AppHomePage extends AppComponent {
   constructor(config: { selector: string; template: string }) {
@@ -7,7 +7,7 @@ class AppHomePage extends AppComponent {
 }
 
 export const appHomePage = new AppHomePage({
-  selector: ".content",
+  selector: '.content',
   template: `
         <div class="container">
           <div class="wrapper">
