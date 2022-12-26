@@ -1,6 +1,4 @@
-import { DataToy } from '../pages/appToysPage';
-// TODO: why I can't use DataToy interface
-interface IToyInfoCard extends DataToy {
+export interface DataToy {
   num: string;
   name: string;
   count: string;
@@ -9,13 +7,9 @@ interface IToyInfoCard extends DataToy {
   color: string;
   size: string;
   favorite: string;
-
-  createCard(): HTMLElement;
-
-  render(elem: HTMLElement, selector: string): void;
 }
 
-export class Card implements IToyInfoCard {
+export default class Card implements DataToy {
   num: string;
 
   name: string;
@@ -32,16 +26,7 @@ export class Card implements IToyInfoCard {
 
   favorite: string;
 
-  constructor(cardInfo: {
-    num: string;
-    name: string;
-    count: string;
-    year: string;
-    shape: string;
-    color: string;
-    size: string;
-    favorite: string;
-  }) {
+  constructor(cardInfo: DataToy) {
     this.num = cardInfo.num;
     this.name = cardInfo.name;
     this.count = cardInfo.count;
@@ -94,7 +79,7 @@ export class Card implements IToyInfoCard {
   }
 
   render(elem: HTMLElement, selector: string): void {
-    const $placeToInsert: HTMLElement | null = document.querySelector(selector);
+    const $placeToInsert: HTMLElement = document.querySelector(selector) as HTMLElement;
     if ($placeToInsert instanceof HTMLElement) {
       $placeToInsert.insertAdjacentElement('beforeend', elem);
     }

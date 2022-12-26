@@ -4,9 +4,8 @@ import 'nouislider/dist/nouislider.css';
 
 import { AppComponent } from '../appComponent';
 import data from '../../data';
-import { Card } from '../components/cards';
-
-type Direction = 'asc' | 'desc';
+import Card from '../components/cards';
+import { Direction, getToys } from '../components/filters';
 
 export interface DataToy {
   num: string;
@@ -42,7 +41,6 @@ class AppToysPage extends AppComponent {
     };
   }
 
-  // TODO: I have to investigate reasons of multiplying toys
   renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
     const $cardsContainer: HTMLElement = document.querySelector(selector) as HTMLElement;
     if ($cardsContainer instanceof HTMLElement) {
@@ -54,41 +52,41 @@ class AppToysPage extends AppComponent {
     }
   }
 
-  filterCards(
-    fParams: { [key: string]: string[] },
-    rParams: { [key: string]: string[] },
-    toys: DataToy[] = this.toysData,
-  ): DataToy[] {
-    const arrFilters = Object.entries(fParams);
-    const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
-      const [cat, arrValues] = curCats;
-      return arrValues.reduce(
-        (accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)],
-        [] as DataToy[],
-      );
-    }, toys as DataToy[]);
-
-    const rFilters = Object.entries(rParams);
-    const filtered = rFilters.reduce((accToysByCat, curCats) => {
-      const [cat, arrValues] = curCats;
-      return arrValues.reduce(
-        (accToys, curValue, idx) => [
-          ...accToys,
-          ...accToysByCat.filter((item) => (idx === 0 ? item[cat as keyof DataToy] >= curValue : item[cat as keyof DataToy] >= curValue)),
-        ],
-        [] as DataToy[],
-      );
-    }, filteredToys as DataToy[]);
-
-    const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
-      const res = dir === 'asc' ? 1 : -1;
-      return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
-    };
-
-    // const result = filtered.length ? filtered : toys;
-
-    return filtered.sort(filteredByField(this.sortField, this.sortDir));
-  }
+  // filterCards(
+  //   fParams: { [key: string]: string[] },
+  //   rParams: { [key: string]: string[] },
+  //   toys: DataToy[] = this.toysData,
+  // ): DataToy[] {
+  //   const arrFilters = Object.entries(fParams);
+  //   const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
+  //     const [cat, arrValues] = curCats;
+  //     return arrValues.reduce(
+  //       (accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)],
+  //       [] as DataToy[],
+  //     );
+  //   }, toys as DataToy[]);
+  //
+  //   const rFilters = Object.entries(rParams);
+  //   const filtered = rFilters.reduce((accToysByCat, curCats) => {
+  //     const [cat, arrValues] = curCats;
+  //     return arrValues.reduce(
+  //       (accToys, curValue, idx) => [
+  //         ...accToys,
+  //         ...accToysByCat.filter((item) => (idx === 0 ? item[cat as keyof DataToy] >= curValue : item[cat as keyof DataToy] >= curValue)),
+  //       ],
+  //       [] as DataToy[],
+  //     );
+  //   }, filteredToys as DataToy[]);
+  //
+  //   const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
+  //     const res = dir === 'asc' ? 1 : -1;
+  //     return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
+  //   };
+  //
+  //   // const result = filtered.length ? filtered : toys;
+  //
+  //   return filtered.sort(filteredByField(this.sortField, this.sortDir));
+  // }
 
   render(): void {
     this.el = document.querySelector(this.selector) as HTMLElement;
@@ -107,10 +105,10 @@ class AppToysPage extends AppComponent {
 
     const qtyInputs = [inputQtyMin, inputQtyMax];
     const yearInputs = [inputYearMin, inputYearMax];
-    const sorting = (field: keyof DataToy): DataToy[] => data.sort((a, b) => (Number(a[field]) < Number(b[field]) ? 1 : -1));
-    const sorted = (field: keyof DataToy): DataToy[] => sorting(field);
-    const getMax = (field: keyof DataToy) => sorted(field)[0][field];
-    const getMin = (field: keyof DataToy) => sorted(field).reverse()[0][field];
+
+    const sorting = (f: keyof DataToy): DataToy[] => data.sort((a, b) => (+a[f] < +b[f] ? 1 : -1));
+    const getMax = (field: keyof DataToy) => sorting(field)[0][field];
+    const getMin = (field: keyof DataToy) => sorting(field).reverse()[0][field];
 
     const resetBtn = document.querySelector('.reset') as HTMLElement;
     const resetFilters = () => {
@@ -134,7 +132,7 @@ class AppToysPage extends AppComponent {
 
       Array.from(fItems).map((item) => item.classList.remove('active'));
       favorite.checked = false;
-      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
     });
 
     resetFilters();
@@ -156,7 +154,7 @@ class AppToysPage extends AppComponent {
       sliderQuantity.noUiSlider.on('update', (values, handle) => {
         qtyInputs[handle].value = `${values[handle]}`;
         this.rangeFilters.count[handle] = `${values[handle]}`;
-        this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+        this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
     noUiSlider.create(sliderYear, {
@@ -176,7 +174,7 @@ class AppToysPage extends AppComponent {
       sliderYear.noUiSlider.on('update', (values, handle) => {
         yearInputs[handle].value = `${values[handle]}`;
         this.rangeFilters.year[handle] = `${values[handle]}`;
-        this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+        this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
 
@@ -229,7 +227,7 @@ class AppToysPage extends AppComponent {
       if (target) {
         this.sortField = target.value as keyof DataToy;
       }
-      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
     });
 
     sortDir.addEventListener('change', (e) => {
@@ -237,10 +235,10 @@ class AppToysPage extends AppComponent {
       if (target) {
         this.sortDir = target.value as Direction;
       }
-      this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
     });
 
-    this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+    this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
     console.log('list of filters =>', listOfFilters);
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
@@ -251,17 +249,19 @@ class AppToysPage extends AppComponent {
         const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
         if (tClosestFItem.classList.contains('active')) {
           tClosestFItem.classList.remove('active');
-          this.filters[attributeKey] = this.filters[attributeKey].filter((attr) => attr !== arrParam);
-          if (this.filters[attributeKey].length === 0) {
-            delete this.filters[attributeKey];
+          getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
+            (attr: string | undefined) => attr !== arrParam,
+          );
+          if (getToys.fConfig[attributeKey].length === 0) {
+            delete getToys.fConfig[attributeKey];
           }
-          this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+          this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
         } else {
           tClosestFItem.classList.add('active');
-          Array.isArray(this.filters[attributeKey])
-            ? this.filters[attributeKey].push(arrParam as string)
-            : (this.filters[attributeKey] = [arrParam as string]);
-          this.renderCards(this.filterCards(this.filters, this.rangeFilters, this.toysData));
+          Array.isArray(getToys.fConfig[attributeKey])
+            ? getToys.fConfig[attributeKey].push(arrParam as string)
+            : (getToys.fConfig[attributeKey] = [arrParam as string]);
+          this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
         }
       }
     }));
