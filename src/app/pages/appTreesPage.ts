@@ -1,4 +1,4 @@
-import { AppComponent } from "../appComponent";
+import { AppComponent } from '../appComponent';
 
 class AppTreesPage extends AppComponent {
   constructor(config: { selector: string; template: string }) {
@@ -7,7 +7,7 @@ class AppTreesPage extends AppComponent {
 }
 
 export const appTreesPage = new AppTreesPage({
-  selector: ".content",
+  selector: '.content',
   template: `
         <div class="container">
         <div class="wrapper">

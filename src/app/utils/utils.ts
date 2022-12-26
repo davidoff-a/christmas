@@ -1,5 +1,5 @@
 import { AppComponent } from '../appComponent';
-import { DataToy } from '../pages/appToysPage';
+import { DataToy } from '../components/cards';
 import data from '../../data';
 
 function cleanTag(selector: string) {
