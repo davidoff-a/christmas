@@ -1,4 +1,3 @@
-// TODO: filter by field
 // TODO: filter by range
 // TODO: filter by sorting
 // TODO: filter by reset filters
@@ -6,6 +5,7 @@
 import { DataToy } from './cards';
 
 import data from '../../data';
+// import { appToysPage } from '../pages/appToysPage';
 
 export type Direction = 'asc' | 'desc';
 
@@ -24,8 +24,9 @@ class Filtron {
     this.sortField = 'name';
     this.sortDir = 'asc';
     this.fConfig = {
-      // count: ['1', '1'],
-      // year: ['1', '1'],
+      count: ['1', '12'],
+      year: ['1940', '2020'],
+      // TODO: improve filters to work with range filters
     };
   }
 

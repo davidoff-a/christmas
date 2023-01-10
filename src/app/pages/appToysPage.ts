@@ -6,7 +6,12 @@ import { AppComponent } from '../appComponent';
 import data from '../../data';
 import Card from '../components/cards';
 import { Direction, getToys } from '../components/filters';
-
+// TODO: generate HTML with TS
+// TODO: generate page structure
+// TODO: embed into render method rendering cards and filters
+// TODO: create class for creating filters, cards
+// TODO: implement decorator development template
+// TODO: make separate class for data-filtering
 export interface DataToy {
   num: string;
   name: string;
@@ -25,20 +30,20 @@ class AppToysPage extends AppComponent {
 
   sortField: keyof DataToy;
 
-  filters: { [key: string]: string[] };
+  // filters: { [key: string]: string[] };
 
-  rangeFilters: { [key: string]: string[] };
+  // rangeFilters: { [key: string]: string[] };
 
   constructor(config: { selector: string; template: string }, toysData: DataToy[] = data) {
     super(config);
     this.toysData = toysData;
     this.sortField = 'name';
     this.sortDir = 'asc';
-    this.filters = {};
-    this.rangeFilters = {
-      count: ['1', '1'],
-      year: ['1', '1'],
-    };
+    // this.filters = {};
+    // this.rangeFilters = {
+    //   count: [this.getMin('count'), this.getMax('count')],
+    //   year: [this.getMin('year'), this.getMax('count')],
+    // };
   }
 
   renderCards(toys: DataToy[] = this.toysData, selector: string = '.cards'): void {
@@ -52,41 +57,18 @@ class AppToysPage extends AppComponent {
     }
   }
 
-  // filterCards(
-  //   fParams: { [key: string]: string[] },
-  //   rParams: { [key: string]: string[] },
-  //   toys: DataToy[] = this.toysData,
-  // ): DataToy[] {
-  //   const arrFilters = Object.entries(fParams);
-  //   const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
-  //     const [cat, arrValues] = curCats;
-  //     return arrValues.reduce(
-  //       (accToys, curValue) => [...accToys, ...accToysByCat.filter((item) => item[cat as keyof DataToy] === curValue)],
-  //       [] as DataToy[],
-  //     );
-  //   }, toys as DataToy[]);
+  // resetFilters = () => {
+  //   this.rangeFilters.count[0] = `${this.getMin('count')}`;
+  //   this.rangeFilters.count[1] = `${this.getMax('count')}`;
+  //   this.rangeFilters.year[0] = `${this.getMin('year')}`;
+  //   this.rangeFilters.year[1] = `${this.getMax('year')}`;
+  // };
+
+  // sorting = (f: keyof DataToy): DataToy[] => data.sort((a, b) => (+a[f] < +b[f] ? 1 : -1));
   //
-  //   const rFilters = Object.entries(rParams);
-  //   const filtered = rFilters.reduce((accToysByCat, curCats) => {
-  //     const [cat, arrValues] = curCats;
-  //     return arrValues.reduce(
-  //       (accToys, curValue, idx) => [
-  //         ...accToys,
-  //         ...accToysByCat.filter((item) => (idx === 0 ? item[cat as keyof DataToy] >= curValue : item[cat as keyof DataToy] >= curValue)),
-  //       ],
-  //       [] as DataToy[],
-  //     );
-  //   }, filteredToys as DataToy[]);
+  // getMax = (field: keyof DataToy) => this.sorting(field)[0][field];
   //
-  //   const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
-  //     const res = dir === 'asc' ? 1 : -1;
-  //     return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
-  //   };
-  //
-  //   // const result = filtered.length ? filtered : toys;
-  //
-  //   return filtered.sort(filteredByField(this.sortField, this.sortDir));
-  // }
+  // getMin = (field: keyof DataToy) => this.sorting(field).reverse()[0][field];
 
   render(): void {
     this.el = document.querySelector(this.selector) as HTMLElement;
@@ -106,44 +88,35 @@ class AppToysPage extends AppComponent {
     const qtyInputs = [inputQtyMin, inputQtyMax];
     const yearInputs = [inputYearMin, inputYearMax];
 
-    const sorting = (f: keyof DataToy): DataToy[] => data.sort((a, b) => (+a[f] < +b[f] ? 1 : -1));
-    const getMax = (field: keyof DataToy) => sorting(field)[0][field];
-    const getMin = (field: keyof DataToy) => sorting(field).reverse()[0][field];
+    // const resetBtn = document.querySelector('.reset') as HTMLElement;
 
-    const resetBtn = document.querySelector('.reset') as HTMLElement;
-    const resetFilters = () => {
-      this.rangeFilters.count[0] = `${getMin('count')}`;
-      this.rangeFilters.count[1] = `${getMax('count')}`;
-      this.rangeFilters.year[0] = `${getMin('year')}`;
-      this.rangeFilters.year[1] = `${getMax('year')}`;
-    };
-    resetBtn.addEventListener('click', () => {
-      const fItems = document.querySelectorAll('.filter__item');
-      const favorite = document.getElementById('favorite-only') as HTMLInputElement;
+    // resetBtn.addEventListener('click', () => {
+    //   const fItems = document.querySelectorAll('.filter__item');
+    //   const favorite = document.getElementById('favorite-only') as HTMLInputElement;
+    //
+    //   // this.resetFilters();
+    //   // this.filters = {};
+    //   this.sortField = 'name';
+    //   sortField.value = 'name';
+    //   this.sortDir = 'asc';
+    //   sortDir.value = 'asc';
+    //   sliderQuantity.noUiSlider!.set([this.getMin('count'), this.getMax('count')]);
+    //   sliderYear.noUiSlider!.set([this.getMin('year'), this.getMax('year')]);
+    //
+    //   Array.from(fItems).map((item) => item.classList.remove('active'));
+    //   favorite.checked = false;
+    //   this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+    // });
 
-      resetFilters();
-      this.filters = {};
-      this.sortField = 'name';
-      sortField.value = 'name';
-      this.sortDir = 'asc';
-      sortDir.value = 'asc';
-      sliderQuantity.noUiSlider!.set([getMin('count'), getMax('count')]);
-      sliderYear.noUiSlider!.set([getMin('year'), getMax('year')]);
-
-      Array.from(fItems).map((item) => item.classList.remove('active'));
-      favorite.checked = false;
-      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    });
-
-    resetFilters();
+    // this.resetFilters();
 
     noUiSlider.create(sliderQuantity, {
-      start: [getMin('count'), getMax('count')],
+      start: [1, 12],
       connect: true,
       step: 1,
       range: {
-        min: +getMin('count'),
-        max: +getMax('count'),
+        min: 1,
+        max: 12,
       },
       format: wNumb({
         decimals: 0,
@@ -153,17 +126,17 @@ class AppToysPage extends AppComponent {
     if (sliderQuantity.noUiSlider) {
       sliderQuantity.noUiSlider.on('update', (values, handle) => {
         qtyInputs[handle].value = `${values[handle]}`;
-        this.rangeFilters.count[handle] = `${values[handle]}`;
+        // this.rangeFilters.count[handle] = `${values[handle]}`;
         this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
     noUiSlider.create(sliderYear, {
-      start: [getMin('year'), getMax('year')],
+      start: [1940, 2020],
       connect: true,
       step: 5,
       range: {
-        min: +getMin('year'),
-        max: +getMax('year'),
+        min: 1940,
+        max: 2020,
       },
       format: wNumb({
         decimals: 0,
@@ -173,7 +146,7 @@ class AppToysPage extends AppComponent {
     if (sliderYear.noUiSlider) {
       sliderYear.noUiSlider.on('update', (values, handle) => {
         yearInputs[handle].value = `${values[handle]}`;
-        this.rangeFilters.year[handle] = `${values[handle]}`;
+        // this.rangeFilters.year[handle] = `${values[handle]}`;
         this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
@@ -239,12 +212,10 @@ class AppToysPage extends AppComponent {
     });
 
     this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    console.log('list of filters =>', listOfFilters);
     Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const tClosestFItem = target.closest('.filter__item') as HTMLElement;
       if (!Object.keys(tClosestFItem).length) {
-        console.log('closest item =>', tClosestFItem.dataset);
         // TODO: add checking for empty object dataset
         const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
         if (tClosestFItem.classList.contains('active')) {
