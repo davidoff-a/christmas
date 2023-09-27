@@ -1,7 +1,7 @@
 {
   "name": "christmas-task",
   "version": "1.0.0",
-  "description": "Cristmas task for my granny :)",
+  "description": "Christmas task for my granny :)",
   "main": "index.ts",
   "scripts": {
     "start": "webpack serve --env dev ",
