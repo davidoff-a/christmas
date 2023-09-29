@@ -6,6 +6,8 @@ import { AppComponent } from '../appComponent';
 import data from '../../data';
 import Card from '../components/cards';
 import { Direction, getToys } from '../components/filters';
+import { Component } from '../core/component';
+
 // TODO: generate HTML with TS
 // TODO: generate page structure
 // TODO: embed into render method rendering cards and filters
@@ -76,6 +78,15 @@ class AppToysPage extends AppComponent {
       throw new Error(`Component with selector ${this.selector} wasn't found!!!`);
     } else {
       this.el.innerHTML = this.template;
+      filterShape.render();
+      filterSize.render();
+      filterColor.render();
+      likeFilter.render();
+      sortingFilters.render();
+      rangeFilters.render();
+
+
+
     }
     // const sliderRound = document.getElementById('slider-round') as HTMLElement;
     const sliderYear = document.getElementById('slider__year') as noUiSlider.target;
@@ -212,30 +223,32 @@ class AppToysPage extends AppComponent {
     });
 
     this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    Array.from(listOfFilters).map((item) => item.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      const tClosestFItem = target.closest('.filter__item') as HTMLElement;
-      if (!Object.keys(tClosestFItem).length) {
-        // TODO: add checking for empty object dataset
-        const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
-        if (tClosestFItem.classList.contains('active')) {
-          tClosestFItem.classList.remove('active');
-          getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
-            (attr: string | undefined) => attr !== arrParam,
-          );
-          if (getToys.fConfig[attributeKey].length === 0) {
-            delete getToys.fConfig[attributeKey];
+    Array.from(listOfFilters).map((item) =>
+      item.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const tClosestFItem = target.closest('.filter__item') as HTMLElement;
+        if (!Object.keys(tClosestFItem).length) {
+          // TODO: add checking for empty object dataset
+          const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
+          if (tClosestFItem.classList.contains('active')) {
+            tClosestFItem.classList.remove('active');
+            getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
+              (attr: string | undefined) => attr !== arrParam
+            );
+            if (getToys.fConfig[attributeKey].length === 0) {
+              delete getToys.fConfig[attributeKey];
+            }
+            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+          } else {
+            tClosestFItem.classList.add('active');
+            Array.isArray(getToys.fConfig[attributeKey])
+              ? getToys.fConfig[attributeKey].push(arrParam as string)
+              : (getToys.fConfig[attributeKey] = [arrParam as string]);
+            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
           }
-          this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-        } else {
-          tClosestFItem.classList.add('active');
-          Array.isArray(getToys.fConfig[attributeKey])
-            ? getToys.fConfig[attributeKey].push(arrParam as string)
-            : (getToys.fConfig[attributeKey] = [arrParam as string]);
-          this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
         }
-      }
-    }));
+      })
+    );
   }
 }
 
@@ -247,120 +260,18 @@ export const appToysPage = new AppToysPage({
           <aside class="controls">
             <article class="block">
               <h3 class="block__title">Фильтры</h3>
-              <section class="filter row">
-                <h4 class="filter__title">Форма: </h4>
-                <ul class="filter__list row shapes">
-                  <li class="filter__item" data-shape="шар">
-                    <img src="./assets/ball.svg" alt="ball" title="Украшения в форме шара" />
-                  </li>
-                  <li class="filter__item" data-shape="колокольчик">
-                    <img src="./assets/bell.svg" alt="bell" title="Украшения в форме колокольчика" />
-                  </li>
-                  <li class="filter__item" data-shape="шишка">
-                    <img src="./assets/cone.svg" alt="cone" title="Украшения в форме шишки" />
-                  </li>
-                  <li class="filter__item" data-shape="снежинка">
-                    <img src="./assets/snowflake.svg" alt="snow" title="Украшения в форме снежинки" />
-                  </li>
-                  <li class="filter__item" data-shape="фигурка">
-                    <img src="./assets/toy.svg" alt="toy" title="Украшения в форме игрушки" />
-                  </li>
-                </ul>
-              </section>
-              <section class="filter row">
-                <h4 class="filter__title">Цвет: </h4>
-                <ul class="filter__list row colors">
-                  <li class="filter__item" data-color="белый">
-                    <div class="filter__color white">
-
-                    </div>
-                  </li>
-                  <li class="filter__item" data-color="желтый">
-                    <div class="filter__color yellow">
-
-                    </div>
-                  </li>
-                  <li class="filter__item" data-color="красный">
-                    <div class="filter__color red">
-
-                    </div>
-                  </li>
-                  <li class="filter__item" data-color="синий">
-                    <div class="filter__color blue">
-
-                    </div>
-                  </li>
-                  <li class="filter__item" data-color="зелёный">
-                    <div class="filter__color green">
-                    </div>
-                  </li>
-                </ul>
-              </section>
-              <section class="filter row">
-                <h4 class="filter__title">Размер: </h4>
-                <ul class="filter__list row sizes">
-                  <li class="filter__item large" data-size="большой">
-                    <img src="./assets/ball.svg" alt="ball" title="Большие укражения" />
-                  </li>
-                  <li class="filter__item middle" data-size="средний">
-                    <img src="./assets/ball.svg" alt="ball" title="Украшения среднего размера" />
-                  </li>
-                  <li class="filter__item small" data-size="малый">
-                    <img src="./assets/ball.svg" alt="ball" title="Маленькие украшения" />
-                  </li>
-                </ul>
-              </section>
-              <section class="filter row">
-                <h4 class="filter__title">Любимые: </h4>
-                <ul class="filter__list row favorite__only">
-                  <li class="filter__item" data-favorite="1">
-                    <input type="checkbox" id="favorite-only" name="favorite-only">
-                  </li>
-                </ul>
-              </section>
+              <div id="simple-filters"></div>
+              <div id="color-filters"></div>
+              <div id="size-filter"></div>
+              <div id="likeFilter"></div>
             </article>
             <article class="block">
               <h3 class="block__title">Сортировка</h3>
-              <section class="filter row">
-                <select class="sorting" id="sortField">
-                  <option value="name">По названию</option>
-                  <option value="year">По году</option>
-                </select>
-                <select class="sorting" id="sortDirection">
-                  <option value="asc">По возрастанию</option>
-                  <option value="desc">По убыванию</option>
-                </select>
-              </section>
+              <div id="sortFilter"></div>
             </article>
             <article class="block block__high">
               <h3 class="block__title">Фильтры по диапазону</h3>
-              <section class="filter col">
-<!--                <div class="slider slider-round" id="slider__quantity">Количество</div>-->
-                <ul class="filter__list row col">
-                  <li class="filter__item range">
-                    <h4 class="filter__title">Количество</h4>
-                    <div class="slider slider-styled slider-round" id="slider__quantity"></div>
-                    <div class="row slider__controls">
-                      <input type="text" class="slider__input" id="quantity_min" value="1">
-                      <input type="text" class="slider__input" id="quantity_max" value="12">
-                    </div>
-                </li>
-                </ul>
-                
-              </section>
-              <section class="filter col">
-              <ul class="filter__list row col">
-                <li class="filter__item range">
-                  <h4 class="filter__title">По году</h4>
-                  <div class="slider slider-styled slider-round" id="slider__year"></div>
-                  <div class="row slider__controls">
-                    <input type="text" class="slider__input" id="year_min" value="1940">
-                    <input type="text" class="slider__input" id="year_max" value="2010">
-                  </div>
-                  
-                  </li>
-                </ul>
-              </section>
+              <div id="yearFilter"></div>
             </article>
             <article class="block">
               <h3 class="block__title">Сброс всех фильтров</h3>
@@ -374,5 +285,147 @@ export const appToysPage = new AppToysPage({
           </main>
         </div>
       </div>
+  `,
+});
+
+const filterShape = new Component({
+  selector: '#simple-filters',
+  template: `
+  <section class="filter row">
+    <h4 class="filter__title" id="fShape">Форма: </h4>
+    <ul class="filter__list row shapes">
+      <li class="filter__item" data-shape="шар">
+        <img src="./assets/ball.svg" alt="ball" title="Украшения в форме шара" />
+      </li>
+      <li class="filter__item" data-shape="колокольчик">
+        <img src="./assets/bell.svg" alt="bell" title="Украшения в форме колокольчика" />
+      </li>
+      <li class="filter__item" data-shape="шишка">
+        <img src="./assets/cone.svg" alt="cone" title="Украшения в форме шишки" />
+      </li>
+      <li class="filter__item" data-shape="снежинка">
+        <img src="./assets/snowflake.svg" alt="snow" title="Украшения в форме снежинки" />
+      </li>
+      <li class="filter__item" data-shape="фигурка">
+        <img src="./assets/toy.svg" alt="toy" title="Украшения в форме игрушки" />
+      </li>
+    </ul>
+  </section>`,
+});
+
+const filterColor = new Component({
+  selector: '#color-filters',
+  template: `
+  <section class="filter row">
+    <h4 class="filter__title">Цвет: </h4>
+    <ul class="filter__list row colors">
+      <li class="filter__item" data-color="белый">
+        <div class="filter__color white">
+
+        </div>
+      </li>
+      <li class="filter__item" data-color="желтый">
+        <div class="filter__color yellow">
+
+        </div>
+      </li>
+      <li class="filter__item" data-color="красный">
+        <div class="filter__color red">
+
+        </div>
+      </li>
+      <li class="filter__item" data-color="синий">
+        <div class="filter__color blue">
+
+        </div>
+      </li>
+      <li class="filter__item" data-color="зелёный">
+        <div class="filter__color green">
+        </div>
+      </li>
+    </ul>
+  </section>`,
+});
+
+const filterSize = new Component({
+  selector: '#size-filter',
+  template: `
+  <section class="filter row">
+    <h4 class="filter__title">Размер: </h4>
+    <div id="size-filters"></div>
+    <ul class="filter__list row sizes">
+      <li class="filter__item large" data-size="большой">
+        <img src="./assets/ball.svg" alt="ball" title="Большие укражения" />
+      </li>
+      <li class="filter__item middle" data-size="средний">
+        <img src="./assets/ball.svg" alt="ball" title="Украшения среднего размера" />
+      </li>
+      <li class="filter__item small" data-size="малый">
+        <img src="./assets/ball.svg" alt="ball" title="Маленькие украшения" />
+      </li>
+    </ul>
+  </section>`,
+});
+
+const likeFilter = new Component({
+  selector: '#likeFilter',
+  template: `
+  <section class="filter row">
+    <h4 class="filter__title">Любимые: </h4>
+    <ul class="filter__list row favorite__only">
+      <li class="filter__item" data-favorite="1">
+        <input type="checkbox" id="favorite-only" name="favorite-only">
+      </li>
+    </ul>
+  </section>
+  `,
+});
+
+const sortingFilters = new Component({
+  selector: '#sortFilter',
+  template: `
+  <section class="filter row">
+    <select class="sorting" id="sortField">
+      <option value="name">По названию</option>
+      <option value="year">По году</option>
+    </select>
+    <select class="sorting" id="sortDirection">
+      <option value="asc">По возрастанию</option>
+      <option value="desc">По убыванию</option>
+    </select>
+  </section>
+  `,
+});
+
+const rangeFilters = new Component({
+  selector: '#yearFilter',
+  template: `
+  <section class="filter col">
+<!--                <div class="slider slider-round" id="slider__quantity">Количество</div>-->
+    <ul class="filter__list row col">
+      <li class="filter__item range">
+        <h4 class="filter__title">Количество</h4>
+        <div class="slider slider-styled slider-round" id="slider__quantity"></div>
+        <div class="row slider__controls">
+          <input type="text" class="slider__input" id="quantity_min" value="1">
+          <input type="text" class="slider__input" id="quantity_max" value="12">
+        </div>
+    </li>
+    </ul>
+    
+  </section>
+  <section class="filter col">
+  <ul class="filter__list row col">
+    <li class="filter__item range">
+      <h4 class="filter__title">По году</h4>
+      <div class="slider slider-styled slider-round" id="slider__year"></div>
+      <div class="row slider__controls">
+        <input type="text" class="slider__input" id="year_min" value="1940">
+        <input type="text" class="slider__input" id="year_max" value="2010">
+      </div>
+      
+      </li>
+    </ul>
+  </section>
   `,
 });

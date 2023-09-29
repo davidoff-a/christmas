@@ -5,6 +5,7 @@
 import { DataToy } from './cards';
 
 import data from '../../data';
+import { Component } from '../core/component';
 // import { appToysPage } from '../pages/appToysPage';
 
 export type Direction = 'asc' | 'desc';
@@ -34,13 +35,10 @@ class Filtron {
     const arrFilters = Object.entries(fParams);
     const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
       const [cat, arrValues] = curCats;
-      return arrValues.reduce(
-        (accToys, curVal) => {
-          const cValFiltered = accToysByCat.filter((item) => item[cat as keyof DataToy] === curVal);
-          return [...accToys, ...cValFiltered];
-        },
-        [] as DataToy[],
-      );
+      return arrValues.reduce((accToys, curVal) => {
+        const cValFiltered = accToysByCat.filter((item) => item[cat as keyof DataToy] === curVal);
+        return [...accToys, ...cValFiltered];
+      }, [] as DataToy[]);
     }, toys as DataToy[]);
 
     const filteredByField = (field: keyof DataToy = 'name', dir: Direction = 'asc') => {
@@ -55,3 +53,4 @@ class Filtron {
 }
 
 export const getToys = new Filtron(data);
+
