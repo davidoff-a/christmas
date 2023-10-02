@@ -11,6 +11,7 @@ import { Component } from '../core/component';
 export type Direction = 'asc' | 'desc';
 
 type Obj = { [key: string]: string[] };
+
 class Filtron {
   toysData: DataToy[];
 

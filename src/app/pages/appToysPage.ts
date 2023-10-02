@@ -84,21 +84,14 @@ class AppToysPage extends AppComponent {
       likeFilter.render();
       sortingFilters.render();
       rangeFilters.render();
-
-
-
+      this.addEvListeners();
     }
-    // const sliderRound = document.getElementById('slider-round') as HTMLElement;
-    const sliderYear = document.getElementById('slider__year') as noUiSlider.target;
-    const sliderQuantity = document.getElementById('slider__quantity') as noUiSlider.target;
-    const inputQtyMin = document.getElementById('quantity_min') as HTMLInputElement;
-    const inputQtyMax = document.getElementById('quantity_max') as HTMLInputElement;
-    const inputYearMin = document.getElementById('year_min') as HTMLInputElement;
-    const inputYearMax = document.getElementById('year_max') as HTMLInputElement;
+  }
 
-    const qtyInputs = [inputQtyMin, inputQtyMax];
-    const yearInputs = [inputYearMin, inputYearMax];
-
+  addEvListeners() {
+  
+    this.sliderAction('slider__quantity', 'quantity_min', 'quantity_max', {min: 1, max: 12, step: 1})
+    this.sliderAction('slider__year', 'year_min', 'year_max', {min: 1940, max: 2025, step: 5})
     // const resetBtn = document.querySelector('.reset') as HTMLElement;
 
     // resetBtn.addEventListener('click', () => {
@@ -120,83 +113,6 @@ class AppToysPage extends AppComponent {
     // });
 
     // this.resetFilters();
-
-    noUiSlider.create(sliderQuantity, {
-      start: [1, 12],
-      connect: true,
-      step: 1,
-      range: {
-        min: 1,
-        max: 12,
-      },
-      format: wNumb({
-        decimals: 0,
-      }),
-    });
-
-    if (sliderQuantity.noUiSlider) {
-      sliderQuantity.noUiSlider.on('update', (values, handle) => {
-        qtyInputs[handle].value = `${values[handle]}`;
-        // this.rangeFilters.count[handle] = `${values[handle]}`;
-        this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-      });
-    }
-    noUiSlider.create(sliderYear, {
-      start: [1940, 2020],
-      connect: true,
-      step: 5,
-      range: {
-        min: 1940,
-        max: 2020,
-      },
-      format: wNumb({
-        decimals: 0,
-      }),
-    });
-
-    if (sliderYear.noUiSlider) {
-      sliderYear.noUiSlider.on('update', (values, handle) => {
-        yearInputs[handle].value = `${values[handle]}`;
-        // this.rangeFilters.year[handle] = `${values[handle]}`;
-        this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-      });
-    }
-
-    inputQtyMin.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        const rangeLimit = sliderQuantity.noUiSlider!.get() as string[];
-        rangeLimit[0] = target.value;
-        sliderQuantity.noUiSlider!.set(rangeLimit);
-      }
-    });
-
-    inputQtyMax.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        const rangeLimit = sliderQuantity.noUiSlider!.get() as string[];
-        rangeLimit[1] = target.value;
-        sliderQuantity.noUiSlider!.set(rangeLimit);
-      }
-    });
-
-    inputYearMin.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        const rangeLimit = sliderYear.noUiSlider!.get() as string[];
-        rangeLimit[0] = target.value;
-        sliderYear.noUiSlider!.set(rangeLimit);
-      }
-    });
-
-    inputYearMax.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        const rangeLimit = sliderYear.noUiSlider!.get() as string[];
-        rangeLimit[1] = target.value;
-        sliderYear.noUiSlider!.set(rangeLimit);
-      }
-    });
 
     // TODO: optimize eventHandlers
 
@@ -249,6 +165,58 @@ class AppToysPage extends AppComponent {
         }
       })
     );
+  }
+
+  sliderAction(
+    sliderId: string,
+    inputIdMin: string,
+    inputIdMax: string,
+    rangeFilterConfig: { min: number; max: number; step: number }
+  ) {
+    const slider = document.getElementById(sliderId) as noUiSlider.target;
+    const sliderMin = document.getElementById(inputIdMin) as HTMLInputElement;
+    const sliderMax = document.getElementById(inputIdMax) as HTMLInputElement;
+    const inputs = [sliderMin, sliderMax];
+
+    noUiSlider.create(slider, {
+      start: [rangeFilterConfig.min, rangeFilterConfig.max],
+      connect: true,
+      step: rangeFilterConfig.step,
+      range: {
+        min: rangeFilterConfig.min,
+        max: rangeFilterConfig.max,
+      },
+      format: wNumb({
+        decimals: 0,
+      }),
+    });
+
+    if (slider.noUiSlider) {
+      slider.noUiSlider.on('update', (values, handle) => {
+        inputs[handle].value = `${values[handle]}`;
+        // this.rangeFilters.count[handle] = `${values[handle]}`;
+        this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+      });
+    }
+    
+    sliderMin.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = slider.noUiSlider!.get() as string[];
+        rangeLimit[0] = target.value;
+        slider.noUiSlider!.set(rangeLimit);
+      }
+    });
+
+    sliderMin.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        const rangeLimit = slider.noUiSlider!.get() as string[];
+        rangeLimit[1] = target.value;
+        slider.noUiSlider!.set(rangeLimit);
+      }
+    });
+
   }
 }
 
