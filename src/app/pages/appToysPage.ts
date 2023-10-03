@@ -54,7 +54,7 @@ class AppToysPage extends AppComponent {
       $cardsContainer.innerHTML = '';
       toys.forEach((toy) => {
         const card = new Card(toy);
-        card.render(card.createCard(), selector);
+        card.render(selector, card.createCard());
       });
     }
   }
@@ -89,82 +89,12 @@ class AppToysPage extends AppComponent {
   }
 
   addEvListeners() {
-  
-    this.sliderAction('slider__quantity', 'quantity_min', 'quantity_max', {min: 1, max: 12, step: 1})
-    this.sliderAction('slider__year', 'year_min', 'year_max', {min: 1940, max: 2025, step: 5})
-    // const resetBtn = document.querySelector('.reset') as HTMLElement;
-
-    // resetBtn.addEventListener('click', () => {
-    //   const fItems = document.querySelectorAll('.filter__item');
-    //   const favorite = document.getElementById('favorite-only') as HTMLInputElement;
-    //
-    //   // this.resetFilters();
-    //   // this.filters = {};
-    //   this.sortField = 'name';
-    //   sortField.value = 'name';
-    //   this.sortDir = 'asc';
-    //   sortDir.value = 'asc';
-    //   sliderQuantity.noUiSlider!.set([this.getMin('count'), this.getMax('count')]);
-    //   sliderYear.noUiSlider!.set([this.getMin('year'), this.getMax('year')]);
-    //
-    //   Array.from(fItems).map((item) => item.classList.remove('active'));
-    //   favorite.checked = false;
-    //   this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    // });
-
-    // this.resetFilters();
-
-    // TODO: optimize eventHandlers
-
     const listOfFilters = document.querySelectorAll('.filter__list');
-    // const Filters = {} as { [key: string]: string[] };
-
-    const sortField = document.getElementById('sortField') as HTMLInputElement;
-    const sortDir = document.getElementById('sortDirection') as HTMLInputElement;
-    // TODO: improve this code with universal handler with generic type
-    sortField.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        this.sortField = target.value as keyof DataToy;
-      }
-      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    });
-
-    sortDir.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        this.sortDir = target.value as Direction;
-      }
-      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    });
-
+    this.sliderAction('slider__quantity', 'quantity_min', 'quantity_max', { min: 1, max: 12, step: 1 });
+    this.sliderAction('slider__year', 'year_min', 'year_max', { min: 1940, max: 2025, step: 5 });
+    this.sortHandle();
+    this.cardsHandle(listOfFilters);
     this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-    Array.from(listOfFilters).map((item) =>
-      item.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const tClosestFItem = target.closest('.filter__item') as HTMLElement;
-        if (!Object.keys(tClosestFItem).length) {
-          // TODO: add checking for empty object dataset
-          const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
-          if (tClosestFItem.classList.contains('active')) {
-            tClosestFItem.classList.remove('active');
-            getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
-              (attr: string | undefined) => attr !== arrParam
-            );
-            if (getToys.fConfig[attributeKey].length === 0) {
-              delete getToys.fConfig[attributeKey];
-            }
-            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-          } else {
-            tClosestFItem.classList.add('active');
-            Array.isArray(getToys.fConfig[attributeKey])
-              ? getToys.fConfig[attributeKey].push(arrParam as string)
-              : (getToys.fConfig[attributeKey] = [arrParam as string]);
-            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
-          }
-        }
-      })
-    );
   }
 
   sliderAction(
@@ -198,7 +128,7 @@ class AppToysPage extends AppComponent {
         this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
-    
+
     sliderMin.addEventListener('change', (e) => {
       const target = e.target as HTMLInputElement;
       if (target) {
@@ -216,7 +146,82 @@ class AppToysPage extends AppComponent {
         slider.noUiSlider!.set(rangeLimit);
       }
     });
+  }
 
+  sortHandle() {
+    // const resetBtn = document.querySelector('.reset') as HTMLElement;
+
+    // resetBtn.addEventListener('click', () => {
+    //   const fItems = document.querySelectorAll('.filter__item');
+    //   const favorite = document.getElementById('favorite-only') as HTMLInputElement;
+    //
+    //   // this.resetFilters();
+    //   // this.filters = {};
+    //   this.sortField = 'name';
+    //   sortField.value = 'name';
+    //   this.sortDir = 'asc';
+    //   sortDir.value = 'asc';
+    //   sliderQuantity.noUiSlider!.set([this.getMin('count'), this.getMax('count')]);
+    //   sliderYear.noUiSlider!.set([this.getMin('year'), this.getMax('year')]);
+    //
+    //   Array.from(fItems).map((item) => item.classList.remove('active'));
+    //   favorite.checked = false;
+    //   this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+    // });
+
+    // this.resetFilters();
+
+    // TODO: optimize eventHandlers
+
+    // const Filters = {} as { [key: string]: string[] };
+
+    const sortField = document.getElementById('sortField') as HTMLInputElement;
+    const sortDir = document.getElementById('sortDirection') as HTMLInputElement;
+    // TODO: improve this code with universal handler with generic type
+    sortField.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        this.sortField = target.value as keyof DataToy;
+      }
+      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+    });
+
+    sortDir.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        this.sortDir = target.value as Direction;
+      }
+      this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+    });
+  }
+
+  cardsHandle(listOfFilters: NodeList) {
+    Array.from(listOfFilters).map((item) =>
+      item.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const tClosestFItem = target.closest('.filter__item') as HTMLElement;
+        if (!Object.keys(tClosestFItem).length) {
+          // TODO: add checking for empty object dataset
+          const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
+          if (tClosestFItem.classList.contains('active')) {
+            tClosestFItem.classList.remove('active');
+            getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
+              (attr: string | undefined) => attr !== arrParam
+            );
+            if (getToys.fConfig[attributeKey].length === 0) {
+              delete getToys.fConfig[attributeKey];
+            }
+            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+          } else {
+            tClosestFItem.classList.add('active');
+            Array.isArray(getToys.fConfig[attributeKey])
+              ? getToys.fConfig[attributeKey].push(arrParam as string)
+              : (getToys.fConfig[attributeKey] = [arrParam as string]);
+            this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
+          }
+        }
+      })
+    );
   }
 }
 

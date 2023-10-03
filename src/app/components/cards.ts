@@ -78,7 +78,7 @@ export default class Card implements DataToy {
     return card;
   }
 
-  render(elem: HTMLElement, selector: string): void {
+  render(selector: string, elem: HTMLElement): void {
     const $placeToInsert: HTMLElement = document.querySelector(selector) as HTMLElement;
     if ($placeToInsert instanceof HTMLElement) {
       $placeToInsert.insertAdjacentElement('beforeend', elem);

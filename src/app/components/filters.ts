@@ -28,7 +28,7 @@ class Filtron {
     this.fConfig = {
       count: ['1', '12'],
       year: ['1940', '2020'],
-      // TODO: improve filters to work with range filters
+      //TODO: improve filters to work with range filters
     };
   }
 
