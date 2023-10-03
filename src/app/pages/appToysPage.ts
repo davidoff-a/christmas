@@ -138,7 +138,7 @@ class AppToysPage extends AppComponent {
       }
     });
 
-    sliderMin.addEventListener('change', (e) => {
+    sliderMax.addEventListener('change', (e) => {
       const target = e.target as HTMLInputElement;
       if (target) {
         const rangeLimit = slider.noUiSlider!.get() as string[];
@@ -196,6 +196,7 @@ class AppToysPage extends AppComponent {
   }
 
   cardsHandle(listOfFilters: NodeList) {
+    //TODO this method implements some different actions, I need to split this method to several methods
     Array.from(listOfFilters).map((item) =>
       item.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
@@ -203,8 +204,8 @@ class AppToysPage extends AppComponent {
         if (!Object.keys(tClosestFItem).length) {
           // TODO: add checking for empty object dataset
           const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
-          if (tClosestFItem.classList.contains('active')) {
-            tClosestFItem.classList.remove('active');
+          if (isElementActive(tClosestFItem, 'active')) {
+            changeElementActivity(tClosestFItem, 'active');
             getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
               (attr: string | undefined) => attr !== arrParam
             );
@@ -213,7 +214,7 @@ class AppToysPage extends AppComponent {
             }
             this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
           } else {
-            tClosestFItem.classList.add('active');
+            changeElementActivity(tClosestFItem, 'active');
             Array.isArray(getToys.fConfig[attributeKey])
               ? getToys.fConfig[attributeKey].push(arrParam as string)
               : (getToys.fConfig[attributeKey] = [arrParam as string]);
@@ -233,9 +234,9 @@ export const appToysPage = new AppToysPage({
           <aside class="controls">
             <article class="block">
               <h3 class="block__title">Фильтры</h3>
-              <div id="simple-filters"></div>
-              <div id="color-filters"></div>
-              <div id="size-filter"></div>
+              <div id="shapeFilters"></div>
+              <div id="colorFilters"></div>
+              <div id="sizeFilter"></div>
               <div id="likeFilter"></div>
             </article>
             <article class="block">
@@ -262,7 +263,7 @@ export const appToysPage = new AppToysPage({
 });
 
 const filterShape = new Component({
-  selector: '#simple-filters',
+  selector: '#shapeFilters',
   template: `
   <section class="filter row">
     <h4 class="filter__title" id="fShape">Форма: </h4>
@@ -283,11 +284,12 @@ const filterShape = new Component({
         <img src="./assets/toy.svg" alt="toy" title="Украшения в форме игрушки" />
       </li>
     </ul>
-  </section>`,
+  </section>
+  `,
 });
 
 const filterColor = new Component({
-  selector: '#color-filters',
+  selector: '#colorFilters',
   template: `
   <section class="filter row">
     <h4 class="filter__title">Цвет: </h4>
@@ -321,7 +323,7 @@ const filterColor = new Component({
 });
 
 const filterSize = new Component({
-  selector: '#size-filter',
+  selector: '#sizeFilter',
   template: `
   <section class="filter row">
     <h4 class="filter__title">Размер: </h4>
@@ -402,3 +404,12 @@ const rangeFilters = new Component({
   </section>
   `,
 });
+
+function isElementActive(item: HTMLElement, cl: string): boolean {
+  return item.classList.contains(cl);
+}
+
+function changeElementActivity(item: HTMLElement, cl: string): void {
+  isElementActive(item, cl) ? item.classList.remove(cl) : item.classList.add(cl);
+}
+
