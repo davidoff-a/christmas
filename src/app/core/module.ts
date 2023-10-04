@@ -1,6 +1,7 @@
 import { AppComponent } from '../appComponent';
+import { lsHandler } from '../common/appLocalStorage';
 import { router } from '../utils/router';
-import { wfm } from '../utils/utils';
+import { changeElementActivity, wfm } from '../utils/utils';
 
 export class Module {
   components: AppComponent[];
@@ -25,6 +26,8 @@ export class Module {
     if (this.routes) {
       this.initRoutes();
     }
+
+    lsHandler.setDefaultData();
   }
 
   initComponents() {
@@ -52,7 +55,8 @@ export class Module {
       const $choosenMenuItem = document.querySelector(`[data-active = "${route.path}"]`);
       if ($choosenMenuItem) {
         this.breadCrumps();
-        $choosenMenuItem.classList.add('active');
+        // $choosenMenuItem.classList.add('active');
+        changeElementActivity($choosenMenuItem as HTMLElement, 'active');
       }
     }
   }

@@ -7,6 +7,7 @@ import data from '../../data';
 import Card from '../components/cards';
 import { Direction, getToys } from '../components/filters';
 import { Component } from '../core/component';
+import { changeElementActivity, isElementActive } from '../utils/utils';
 
 // TODO: generate HTML with TS
 // TODO: generate page structure
@@ -202,10 +203,10 @@ class AppToysPage extends AppComponent {
         const target = e.target as HTMLElement;
         const tClosestFItem = target.closest('.filter__item') as HTMLElement;
         if (!Object.keys(tClosestFItem).length) {
-          // TODO: add checking for empty object dataset
           const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
           if (isElementActive(tClosestFItem, 'active')) {
             changeElementActivity(tClosestFItem, 'active');
+            localStorage
             getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
               (attr: string | undefined) => attr !== arrParam
             );
@@ -404,12 +405,4 @@ const rangeFilters = new Component({
   </section>
   `,
 });
-
-function isElementActive(item: HTMLElement, cl: string): boolean {
-  return item.classList.contains(cl);
-}
-
-function changeElementActivity(item: HTMLElement, cl: string): void {
-  isElementActive(item, cl) ? item.classList.remove(cl) : item.classList.add(cl);
-}
 

@@ -26,4 +26,19 @@ function itemsFilter(field: keyof DataToy, parameter: string, dataArray: DataToy
   return dataArray.filter((item) => item[field] === parameter);
 }
 
-export { cleanTag, wfm, itemsFilter };
+function isElementActive(item: HTMLElement, cl: string): boolean {
+  return item.classList.contains(cl);
+}
+
+function changeElementActivity(item: HTMLElement, cl: string): void {
+  isElementActive(item, cl) ? item.classList.remove(cl) : item.classList.add(cl);
+}
+
+function resetElementsActivity(cl: string) {
+  const activeElements = document.querySelectorAll(cl);
+  for (const el of activeElements) {
+    el.classList.remove(cl);
+  }
+}
+
+export { cleanTag, wfm, itemsFilter, isElementActive, changeElementActivity, resetElementsActivity };
