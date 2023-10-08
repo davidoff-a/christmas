@@ -8,9 +8,13 @@ import data from '../../data';
 import { Component } from '../core/component';
 // import { appToysPage } from '../pages/appToysPage';
 
-export type Direction = 'asc' | 'desc';
+type Direction = 'asc' | 'desc';
 
 type Obj = { [key: string]: string[] };
+
+export interface filterConfig  {
+  [key: string]:{[key:string]:string|string[]}
+}
 
 const filterConfigDefault = {
   shape: {
@@ -63,6 +67,7 @@ class Filtron {
     this.fConfig = {
       count: ['1', '12'],
       year: ['1940', '2020'],
+      //TODO: add filter's name and value to Set (unique collection). Filter's name, filter's type, filter's value or array of values
       //TODO: improve filters to work with range filters
     };
     this.filterConf = filterConfigDefault;
@@ -90,5 +95,6 @@ class Filtron {
   }
 }
 
-export const getToys = new Filtron(data);
+const getToys = new Filtron(data);
 
+export {Direction, Obj, getToys};
