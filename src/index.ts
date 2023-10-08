@@ -1,5 +1,6 @@
 import './sass/index.scss';
 
 import { appModule } from './app/appModule';
+import { wfm } from './app/utils/utils';
 
-appModule.start();
+wfm.delay(2000).then(()=>{appModule.start()});
