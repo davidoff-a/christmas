@@ -43,6 +43,8 @@ class LsHandler {
   setDefaultData(filterData = filterConfigDefault){
     if (!localStorage.getItem('defaultFilterConfig')){
         localStorage.setItem('defaultFilterConfig', JSON.stringify(filterData));
+        localStorage.setItem('filterConfig', JSON.stringify(filterData));
+        
     }
   }
 

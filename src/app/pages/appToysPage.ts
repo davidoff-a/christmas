@@ -202,11 +202,16 @@ class AppToysPage extends AppComponent {
       item.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const tClosestFItem = target.closest('.filter__item') as HTMLElement;
+        const fConf = localStorage.getItem('filterConfig');
+        const fConfObj = JSON.parse(fConf as string);
+
         if (!Object.keys(tClosestFItem).length) {
           const [attributeKey, arrParam] = Object.entries(tClosestFItem.dataset)[0];
           if (isElementActive(tClosestFItem, 'active')) {
             changeElementActivity(tClosestFItem, 'active');
-            localStorage
+            fConfObj[attributeKey].data = fConfObj[attributeKey].data.filter((attr: string | undefined) => attr !== arrParam);
+            // localStorage.removeItem('filterConfig');
+            localStorage.setItem('filterConfig', JSON.stringify(fConfObj));
             getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
               (attr: string | undefined) => attr !== arrParam
             );
@@ -216,6 +221,9 @@ class AppToysPage extends AppComponent {
             this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
           } else {
             changeElementActivity(tClosestFItem, 'active');
+
+            fConfObj[attributeKey].data.push(arrParam);
+            localStorage.setItem('filterConfig', JSON.stringify(fConfObj));
             Array.isArray(getToys.fConfig[attributeKey])
               ? getToys.fConfig[attributeKey].push(arrParam as string)
               : (getToys.fConfig[attributeKey] = [arrParam as string]);
