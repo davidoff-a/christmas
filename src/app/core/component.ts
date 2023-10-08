@@ -30,11 +30,16 @@ export class Component implements IComponent {
     }
     this.el.innerHTML = this.template;
 
-    this._initEvents();
+    // this._initEvents();
   }
 
-  private _initEvents(): void {
-    if (this.events === undefined) return;
-    const { events } = this;
-  }
+  // events(){
+  //   return this.events;
+  // }
+
+  // private _initEvents(): void {
+  //   if (wfm.isUndefined(this.events)) return;
+  //   let events = this.events();
+  //   Object.keys(events).forEach(key => {})
+  // }
 }
