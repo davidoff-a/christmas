@@ -12,6 +12,39 @@ export type Direction = 'asc' | 'desc';
 
 type Obj = { [key: string]: string[] };
 
+const filterConfigDefault = {
+  shape: {
+    type: 'multi',
+    data: ['шар', 'колокольчик', 'шишка', 'снежинка', 'фигурка'],
+  },
+  size: {
+    type: 'multi',
+    data: ['большой', 'средний', 'малый'],
+  },
+  color: {
+    type: 'multi',
+    data: ['белый', 'желтый', 'красный', 'синий', 'зеленый'],
+  },
+  sorting: {
+    type: 'sort',
+    data: ['name', 'asc'],
+  },
+  like: {
+    type: 'multi',
+    data: ['false'],
+  },
+  year: {
+    type: 'range',
+    data: [1940, 2025],
+    step: 5
+  },
+  quantity: {
+    type: 'range',
+    data: [1, 12],
+    step: 1
+  },
+};
+
 class Filtron {
   toysData: DataToy[];
 
@@ -20,6 +53,8 @@ class Filtron {
   sortField: keyof DataToy;
 
   fConfig: Obj = {};
+
+  filterConf: typeof filterConfigDefault;
 
   constructor(toysData: DataToy[] = data) {
     this.toysData = toysData;
@@ -30,9 +65,10 @@ class Filtron {
       year: ['1940', '2020'],
       //TODO: improve filters to work with range filters
     };
+    this.filterConf = filterConfigDefault;
   }
 
-  execute(fParams: Obj, toys: DataToy[] = this.toysData): DataToy[] {
+  execute(fParams: Obj, toys: DataToy[] = this.toysData, filterConf?:  typeof filterConfigDefault ): DataToy[] {
     const arrFilters = Object.entries(fParams);
     const filteredToys = arrFilters.reduce((accToysByCat, curCats) => {
       const [cat, arrValues] = curCats;
@@ -47,6 +83,7 @@ class Filtron {
       return (a: DataToy, b: DataToy) => (a[field] > b[field] ? res : -res);
     };
 
+    
     // const result = filtered.length ? filtered : toys;
 
     return filteredToys.sort(filteredByField(this.sortField, this.sortDir));
