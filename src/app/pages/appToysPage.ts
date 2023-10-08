@@ -42,6 +42,7 @@ class AppToysPage extends AppComponent {
     this.toysData = toysData;
     this.sortField = 'name';
     this.sortDir = 'asc';
+    
     // this.filters = {};
     // this.rangeFilters = {
     //   count: [this.getMin('count'), this.getMax('count')],
@@ -126,6 +127,7 @@ class AppToysPage extends AppComponent {
       slider.noUiSlider.on('update', (values, handle) => {
         inputs[handle].value = `${values[handle]}`;
         // this.rangeFilters.count[handle] = `${values[handle]}`;
+        // getToys.
         this.renderCards(getToys.execute(getToys.fConfig, getToys.toysData));
       });
     }
@@ -210,6 +212,8 @@ class AppToysPage extends AppComponent {
           if (isElementActive(tClosestFItem, 'active')) {
             changeElementActivity(tClosestFItem, 'active');
             fConfObj[attributeKey].data = fConfObj[attributeKey].data.filter((attr: string | undefined) => attr !== arrParam);
+            console.log(getToys.filterConf);
+            
             // localStorage.removeItem('filterConfig');
             localStorage.setItem('filterConfig', JSON.stringify(fConfObj));
             getToys.fConfig[attributeKey] = getToys.fConfig[attributeKey].filter(
