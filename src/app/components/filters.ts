@@ -58,7 +58,7 @@ class Filtron {
 
   fConfig: Obj = {};
 
-  filterConf: typeof filterConfigDefault;
+  filterConf: Obj = {};
 
   constructor(toysData: DataToy[] = data) {
     this.toysData = toysData;
@@ -70,7 +70,7 @@ class Filtron {
       //TODO: add filter's name and value to Set (unique collection). Filter's name, filter's type, filter's value or array of values
       //TODO: improve filters to work with range filters
     };
-    this.filterConf = filterConfigDefault;
+    this.filterConf={};
   }
 
   execute(fParams: Obj, toys: DataToy[] = this.toysData, filterConf?:  typeof filterConfigDefault ): DataToy[] {
@@ -92,6 +92,22 @@ class Filtron {
     // const result = filtered.length ? filtered : toys;
 
     return filteredToys.sort(filteredByField(this.sortField, this.sortDir));
+  }
+}
+
+
+class MultipleValueFilter {
+  fName: string;
+  fValue: string;
+  data: DataToy[];
+  constructor({ config }: { config: { fName: string; fValue: string; data: DataToy[]; }; }){
+    this.fName = config.fName;
+    this.fValue = config.fValue;
+    this.data = config.data;
+  }
+
+  implement(){
+    
   }
 }
 
